@@ -1,0 +1,20 @@
+{
+  "name": "cafe-domain",
+  "version": "0.0.2",
+  "description": "Domain layer for cafe-app",
+  "scripts": {
+    "build": "bsb -make-world",
+    "start": "bsb -make-world -w",
+    "clean": "bsb -clean-world",
+    "pretest": "npm run build",
+    "test": "jest",
+    "watch:jest": "jest --watchAll"
+  },
+  "devDependencies": {
+    "bs-jest": "^0.3.2",
+    "bs-platform": "^2.1.0"
+  },
+  "jest": {
+    "testRegex": "\\./*_test\\.js$"
+  }
+}
