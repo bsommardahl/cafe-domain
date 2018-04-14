@@ -11,8 +11,8 @@
     "watch:jest": "jest --watchAll"
   },
   "devDependencies": {
-    "@glennsl/bs-jest": "^0.4.2",
-    "bs-platform": "^2.1.0"
+    "bs-jest": "^0.3.2",
+    "bs-platform": "^2.2.3"
   },
   "jest": {
     "testMatch": [
