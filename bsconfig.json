@@ -1,5 +1,5 @@
 {
-  "name": "bs-bn.js",
+  "name": "cafe-domain",
   "version": "0.0.2",
   "bsc-flags": [
     "-bs-super-errors"
