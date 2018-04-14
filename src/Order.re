@@ -110,9 +110,8 @@ let updateOrderToJs =
   "createdOn": originalOrder.createdOn,
 };
 
-let toJs = (id: string, rev: string, originalOrder: t, order: t) => {
-  "_id": id,
-  "_rev": rev,
+let toJs = (order: t) => {
+  "_id": order.id,
   "orderItems":
     order.orderItems
     |> List.map(i => OrderItem.orderItemToJs(i))
@@ -126,7 +125,7 @@ let toJs = (id: string, rev: string, originalOrder: t, order: t) => {
     | None => Js.Nullable.undefined
     | Some(paid) => Js.Nullable.return(paid |> Paid.toJs)
     },
-  "createdOn": originalOrder.createdOn,
+  "createdOn": order.createdOn,
 };
 
 let newOrderToJs = (order: newOrder) => {
