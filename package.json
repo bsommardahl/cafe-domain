@@ -11,10 +11,12 @@
     "watch:jest": "jest --watchAll"
   },
   "devDependencies": {
-    "bs-jest": "^0.3.2",
+    "@glennsl/bs-jest": "^0.4.2",
     "bs-platform": "^2.1.0"
   },
   "jest": {
-    "testRegex": "\\./*_test\\.js$"
+    "testMatch": [
+      "<rootDir>/lib/js/**/*test.{bs.js,js}"
+    ]
   }
 }

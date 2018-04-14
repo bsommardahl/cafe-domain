@@ -22,16 +22,15 @@ let calcDiscountTotal =
     discounts,
     0.,
     (acc, dis) => {
-      let rate = 1. +. float_of_int(dis.percent) /. 100.;
-      let discounted = float_of_int(item.suggestedPrice) /. rate;
-      let disc = float_of_int(item.suggestedPrice) -. discounted;
-      acc +. disc /. 100.;
+      let price = float_of_int(item.suggestedPrice) /. 100.;
+      let percent = float_of_int(dis.percent) /. 100.;
+      acc +. price *. percent;
     },
   );
 
 let totalFirstCalculator: totalCalculator =
   (taxPercent: int, discountsList: list(Discount.t), item: OrderItem.t) => {
-    let discounts = discountsList |> calcDiscountTotal(item);
+    let discounts = calcDiscountTotal(item, discountsList);
     let total = float_of_int(item.suggestedPrice) /. 100. -. discounts;
     let taxRate = (100. +. float_of_int(taxPercent)) /. 100.;
     let subTotal = total /. taxRate;
@@ -39,22 +38,9 @@ let totalFirstCalculator: totalCalculator =
     {subTotal, discounts, tax, total};
   };
 
-let calcDiscountSubTotal =
-    (item: OrderItem.t, discounts: list(Discount.t))
-    : float =>
-  Belt.List.reduce(
-    discounts,
-    0.,
-    (acc, dis) => {
-      let rate = float_of_int(dis.percent) /. 100.;
-      let disc = float_of_int(item.suggestedPrice) /. 100. *. rate;
-      acc +. disc;
-    },
-  );
-
 let subTotalFirstCalculator: totalCalculator =
   (taxPercent: int, discounts: list(Discount.t), item: OrderItem.t) => {
-    let discountCalc = discounts |> calcDiscountSubTotal(item);
+    let discountCalc = discounts |> calcDiscountTotal(item);
     let taxRate = float_of_int(taxPercent) /. 100.;
     let subTotal = float_of_int(item.suggestedPrice) /. 100. -. discountCalc;
     let tax = subTotal *. taxRate;

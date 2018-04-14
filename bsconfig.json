@@ -12,7 +12,7 @@
   ],
   "allowed-build-kinds": "js",
   "bs-dependencies": [
-    "bs-jest"
+    "@glennsl/bs-jest"
   ],
   "refmt": 3
 }
