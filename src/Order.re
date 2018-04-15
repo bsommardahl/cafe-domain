@@ -1,20 +1,22 @@
-type updateOrder = {
-  id: string,
-  customerName: string,
-  orderItems: list(OrderItem.t),
-  discounts: list(Discount.t),
-  paid: option(Paid.t),
-};
-
 type t = {
   id: string,
   customerName: string,
   paid: option(Paid.t),
+  returned: option(Return.t),
   orderItems: list(OrderItem.t),
   discounts: list(Discount.t),
   createdOn: float,
   lastUpdated: option(float),
   removed: bool,
+};
+
+type updateOrder = {
+  id: string,
+  customerName: string,
+  orderItems: list(OrderItem.t),
+  discounts: list(Discount.t),
+  returned: option(Return.t),
+  paid: option(Paid.t),
 };
 
 type orderVm = {
@@ -23,6 +25,7 @@ type orderVm = {
   orderItems: list(OrderItem.t),
   discounts: list(Discount.t),
   paid: option(Paid.t),
+  returned: option(Return.t),
   createdOn: float,
   lastUpdated: option(float),
   removed: bool,
@@ -58,6 +61,11 @@ let mapOrderFromJs = orderJs : t => {
     | None => None
     | Some(js) => Some(js |> Paid.fromJs)
     },
+  returned:
+    switch (Js.Nullable.toOption(orderJs##returned)) {
+    | None => None
+    | Some(js) => Some(js |> Return.fromJs)
+    },
   lastUpdated: JsUtils.convertFloatOption(orderJs##lastUpdated),
   removed: false,
 };
@@ -70,6 +78,7 @@ let vmFromExistingOrder = (o: t) => {
     createdOn: o.createdOn,
     discounts: o.discounts,
     paid: o.paid,
+    returned: o.returned,
     lastUpdated: o.lastUpdated,
     removed: false,
   };
@@ -87,6 +96,7 @@ let fromVm = (o: orderVm) : t => {
   createdOn: o.createdOn,
   discounts: o.discounts,
   paid: o.paid,
+  returned: o.returned,
   lastUpdated: o.lastUpdated,
   removed: false,
 };
@@ -101,6 +111,7 @@ let vmToUpdateOrder = (vm: orderVm) : updateOrder => {
   orderItems: vm.orderItems,
   discounts: vm.discounts,
   paid: vm.paid,
+  returned: vm.returned,
 };
 
 let updateOrderToJs =
@@ -122,6 +133,11 @@ let updateOrderToJs =
     | None => Js.Nullable.undefined
     | Some(paid) => Js.Nullable.return(paid |> Paid.toJs)
     },
+  "returned":
+    switch (updateOrder.returned) {
+    | None => Js.Nullable.undefined
+    | Some(ret) => Js.Nullable.return(ret |> Return.toJs)
+    },
   "createdOn": originalOrder.createdOn,
 };
 
@@ -139,6 +155,11 @@ let toJs = (order: t) => {
     switch (order.paid) {
     | None => Js.Nullable.undefined
     | Some(paid) => Js.Nullable.return(paid |> Paid.toJs)
+    },
+  "returned":
+    switch (order.returned) {
+    | None => Js.Nullable.undefined
+    | Some(returned) => Js.Nullable.return(returned |> Return.toJs)
     },
   "createdOn": order.createdOn,
 };

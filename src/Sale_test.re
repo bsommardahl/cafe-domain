@@ -19,6 +19,7 @@ let buildOrder = items : Order.t => {
   orderItems: items,
   paid:
     Some({on: 0.0, by: "test", discount: 0, subTotal: 0, tax: 0, total: 0}),
+  returned: None,
   createdOn: 0.0,
   discounts: [],
   lastUpdated: None,
