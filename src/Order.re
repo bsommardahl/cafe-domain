@@ -76,6 +76,21 @@ let vmFromExistingOrder = (o: t) => {
   vm;
 };
 
+let fromVm = (o: orderVm) : t => {
+  id:
+    switch (o.id) {
+    | None => ""
+    | Some(id) => id
+    },
+  customerName: o.customerName,
+  orderItems: o.orderItems,
+  createdOn: o.createdOn,
+  discounts: o.discounts,
+  paid: o.paid,
+  lastUpdated: o.lastUpdated,
+  removed: false,
+};
+
 let vmToUpdateOrder = (vm: orderVm) : updateOrder => {
   id:
     switch (vm.id) {
