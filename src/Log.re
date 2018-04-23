@@ -4,6 +4,7 @@ type t = {
   level: int,
   message: string,
   payload: string,
+  area: string,
   on: float,
 };
 
@@ -13,6 +14,7 @@ module New = {
     level: int,
     message: string,
     payload: string,
+    area: string,
     on: float,
   };
   let toJs = (log: t) => {
@@ -20,6 +22,7 @@ module New = {
     "level": log.level,
     "message": log.message,
     "payload": log.payload,
+    "area": log.area,
     "on": log.on,
   };
 };
@@ -31,6 +34,7 @@ type jsT = {
   "logType": string,
   "message": string,
   "payload": string,
+  "area": string,
   "on": float,
 };
 
@@ -40,6 +44,7 @@ let fromJs = logJs : t => {
   level: logJs##level,
   message: logJs##message,
   payload: logJs##payload,
+  area: logJs##area,
   on: logJs##on,
 };
 
@@ -49,5 +54,6 @@ let toJs = (log: t) : jsT => {
   "level": log.level,
   "message": log.message,
   "payload": log.payload,
+  "area": log.area,
   "on": log.on,
 };
