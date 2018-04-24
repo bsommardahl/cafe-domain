@@ -43,15 +43,14 @@ let addDays = (d: int, t) : t => t +. day *. float_of_int(d);
 
 let startOfDay = (d: t) : t => {
   let jsDate = d |> Js.Date.fromFloat;
-  let _ =
-    Js.Date.setUTCHoursMS(jsDate, ~hours=0., ~minutes=0., ~seconds=0., ());
+  let _ = Js.Date.setHoursMS(jsDate, ~hours=0., ~minutes=0., ~seconds=0., ());
   jsDate |> Js.Date.getTime;
 };
 
 let endOfDay = (d: t) : t => {
   let jsDate = d |> Js.Date.fromFloat;
   let _ =
-    Js.Date.setUTCHoursMS(jsDate, ~hours=23., ~minutes=59., ~seconds=59., ());
+    Js.Date.setHoursMS(jsDate, ~hours=23., ~minutes=59., ~seconds=59., ());
   jsDate |> Js.Date.getTime;
 };
 

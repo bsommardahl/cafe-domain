@@ -16,12 +16,14 @@ describe("Date functions", () => {
   );
   describe("when getting the start of the day", () =>
     test("it should return the corresponding date at midnight", () =>
-      expect(unixTime |> Date.startOfDay) |> toEqual(1522281600000.)
+      expect(unixTime |> Date.startOfDay |> Date.toDisplay)
+      |> toEqual(1522303200000. |> Date.toDisplay)
     )
   );
   describe("when getting the end of the day", () =>
     test("it should return the corresponding date at 11:59:59", () =>
-      expect(unixTime |> Date.endOfDay) |> toEqual(1522367999000.)
+      expect(unixTime |> Date.endOfDay |> Date.toDisplay)
+      |> toEqual(1522389599000. |> Date.toDisplay)
     )
   );
   describe("when converting", () => {
