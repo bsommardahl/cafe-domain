@@ -24,6 +24,7 @@ let buildOrder = items : Order.t => {
   discounts: [],
   lastUpdated: None,
   removed: false,
+  meta: "",
 };
 
 let buildSale = (name, salePrice, taxRate: int) : Sale.t => {
