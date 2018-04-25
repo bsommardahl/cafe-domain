@@ -1,8 +1,23 @@
+type source =
+  | Order;
+
+let toString = (s: source) =>
+  switch (s) {
+  | Order => "Order"
+  };
+
+let toSource = (s: string) =>
+  switch (s) {
+  | _ => Order
+  };
+
 type t = {
   id: string,
   name: string,
+  source,
   url: string,
   event: string,
+  updateSource: bool,
 };
 
 module New = {
@@ -10,11 +25,15 @@ module New = {
     name: string,
     url: string,
     event: string,
+    source,
+    updateSource: bool,
   };
   let toJs = (webhook: t) => {
     "name": webhook.name,
     "url": webhook.url,
     "event": webhook.event,
+    "source": webhook.source |> toString,
+    "updateSource": webhook.updateSource,
   };
 };
 
@@ -24,6 +43,8 @@ type jsT = {
   "name": string,
   "url": string,
   "event": string,
+  "source": string,
+  "updateSource": bool,
 };
 
 let fromJs = webhookJs : t => {
@@ -31,6 +52,8 @@ let fromJs = webhookJs : t => {
   name: webhookJs##name,
   url: webhookJs##url,
   event: webhookJs##event,
+  source: webhookJs##source |> toSource,
+  updateSource: webhookJs##updateSource,
 };
 
 let toJsWithRev = (id: string, rev: option(string), webhook: t) => {
@@ -39,6 +62,8 @@ let toJsWithRev = (id: string, rev: option(string), webhook: t) => {
   "name": webhook.name,
   "url": webhook.url,
   "event": webhook.event,
+  "source": webhook.source |> toString,
+  "updateSource": webhook.updateSource,
 };
 
 let toJs = (webhook: t) : jsT => {
@@ -46,4 +71,6 @@ let toJs = (webhook: t) : jsT => {
   "name": webhook.name,
   "url": webhook.url,
   "event": webhook.event,
+  "source": webhook.source |> toString,
+  "updateSource": webhook.updateSource,
 };
