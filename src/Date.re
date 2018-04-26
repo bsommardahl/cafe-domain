@@ -4,38 +4,67 @@ let now = Js.Date.now;
 
 let day = 86400000.0;
 
-let toDisplayDate = t => Js.Date.fromFloat(t) |> Js.Date.toDateString;
+let toDisplayDate = t =>
+  Js.Date.fromFloat(t)
+  |> (
+    d => {
+      let month = (d |> Js.Date.getMonth) +. 1.;
+      let day = d |> Js.Date.getDate;
+      let year = d |> Js.Date.getFullYear;
+      (day |> int_of_float |> string_of_int)
+      ++ "-"
+      ++ (month |> int_of_float |> string_of_int)
+      ++ "-"
+      ++ (year |> int_of_float |> string_of_int);
+    }
+  );
 
-let toDisplayTime = t => Js.Date.fromFloat(t) |> Js.Date.toTimeString;
+let toStringWith2Digits = s =>
+  if (s === 0) {
+    "00";
+  } else if (s < 10) {
+    "0" ++ string_of_int(s);
+  } else {
+    string_of_int(s);
+  };
 
-let toShortTime = t =>
+let toISODate = t =>
+  Js.Date.fromFloat(t)
+  |> (
+    d => {
+      let month = (d |> Js.Date.getMonth) +. 1.;
+      let day = d |> Js.Date.getDate;
+      let year = d |> Js.Date.getFullYear;
+      ""
+      ++ (year |> int_of_float |> string_of_int)
+      ++ "-"
+      ++ (month |> int_of_float |> toStringWith2Digits)
+      ++ "-"
+      ++ (day |> int_of_float |> toStringWith2Digits);
+    }
+  );
+
+let toDisplayTime = t =>
   Js.Date.fromFloat(t)
   |> (
     d => {
       let armyHours = d |> Js.Date.getHours |> int_of_float;
-      let isPm = armyHours mod 12 == 0;
+      let isPm = armyHours > 12;
       let hoursPossibleZero = isPm ? armyHours - 12 : armyHours;
       let hours = hoursPossibleZero == 0 ? 12 : hoursPossibleZero;
       let minutes = d |> Js.Date.getMinutes |> int_of_float;
-      let leadingZero = minutes < 10 ? "0" : "";
       let ampm = isPm ? "PM" : "AM";
       string_of_int(hours)
       ++ ":"
-      ++ leadingZero
-      ++ string_of_int(minutes)
+      ++ (minutes |> toStringWith2Digits)
       ++ " "
       ++ ampm;
     }
   );
 
-let toISODate = t : string =>
-  t
-  |> Js.Date.fromFloat
-  |> Js.Date.toISOString
-  |> Js.String.split("T")
-  |> (x => x[0]);
+let toShortTime = toDisplayTime;
 
-let toDisplay = t => Js.Date.fromFloat(t) |> Js.Date.toString;
+let toDisplay = t => (t |> toDisplayDate) ++ " " ++ (t |> toDisplayTime);
 
 let oneMonthBefore = t => t -. day *. 30.44;
 
@@ -54,11 +83,10 @@ let endOfDay = (d: t) : t => {
   jsDate |> Js.Date.getTime;
 };
 
-let toFloat = (formattedDate: string) : float =>
-  formattedDate |> Js.Date.parse |> Js.Date.getTime;
-
-let isValid = (formattedDate: string) : bool =>
-  switch (formattedDate |> toFloat |> toDisplay) {
+let isValid = (formattedDate: string) : bool => {
+  let valid = formattedDate |> Js.Date.parse;
+  switch (valid |> Js.Date.toString) {
   | "Invalid Date" => false
   | _ => true
   };
+};
