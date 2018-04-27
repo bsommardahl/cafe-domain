@@ -51,7 +51,6 @@ type t = {
   source: EventSource.t,
   url: string,
   event: EventType.t,
-  updateSource: bool,
 };
 
 module New = {
@@ -60,14 +59,12 @@ module New = {
     url: string,
     event: EventType.t,
     source: EventSource.t,
-    updateSource: bool,
   };
   let toJs = (webhook: t) => {
     "name": webhook.name,
     "url": webhook.url,
     "event": webhook.event |> EventType.toString,
     "source": webhook.source |> EventSource.toString,
-    "updateSource": webhook.updateSource,
   };
 };
 
@@ -78,7 +75,6 @@ type jsT = {
   "url": string,
   "event": string,
   "source": string,
-  "updateSource": bool,
 };
 
 let fromJs = webhookJs : t => {
@@ -87,7 +83,6 @@ let fromJs = webhookJs : t => {
   url: webhookJs##url,
   event: webhookJs##event |> EventType.toT,
   source: webhookJs##source |> EventSource.toT,
-  updateSource: webhookJs##updateSource,
 };
 
 let toJsWithRev = (id: string, rev: option(string), webhook: t) => {
@@ -97,7 +92,6 @@ let toJsWithRev = (id: string, rev: option(string), webhook: t) => {
   "url": webhook.url,
   "event": webhook.event |> EventType.toString,
   "source": webhook.source |> EventSource.toString,
-  "updateSource": webhook.updateSource,
 };
 
 let toJs = (webhook: t) : jsT => {
@@ -106,5 +100,4 @@ let toJs = (webhook: t) : jsT => {
   "url": webhook.url,
   "event": webhook.event |> EventType.toString,
   "source": webhook.source |> EventSource.toString,
-  "updateSource": webhook.updateSource,
 };
