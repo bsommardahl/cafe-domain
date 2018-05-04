@@ -74,9 +74,13 @@ let mapOrderFromJs = orderJs : t => {
   removed: false,
 };
 
-let vmFromExistingOrder = (o: t) => {
+let toVm = (o: t) => {
   let vm: orderVm = {
-    id: Some(o.id),
+    id:
+      switch (o.id) {
+      | "" => None
+      | id => Some(id)
+      },
     customerName: o.customerName,
     orderItems: o.orderItems,
     createdOn: o.createdOn,
@@ -89,6 +93,8 @@ let vmFromExistingOrder = (o: t) => {
   };
   vm;
 };
+
+let vmFromExistingOrder = toVm;
 
 let fromVm = (o: orderVm) : t => {
   id:
