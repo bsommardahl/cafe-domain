@@ -1,3 +1,19 @@
+module PaymentMethod = {
+  type method =
+    | Cash
+    | Card;
+  let toString = s =>
+    switch (s) {
+    | Cash => "cash"
+    | Card => "card"
+    };
+  let fromString = p =>
+    switch (p) {
+    | "card" => Card
+    | _ => Cash
+    };
+};
+
 type t = {
   subTotal: Money.t,
   discount: Money.t,
@@ -5,7 +21,8 @@ type t = {
   total: Money.t,
   on: Date.t,
   by: string,
-  transactionId: string,
+  externalId: option(string),
+  method: PaymentMethod.method,
 };
 
 let toJs = (p: t) => {
@@ -15,7 +32,8 @@ let toJs = (p: t) => {
   "total": p.total,
   "on": p.on,
   "by": p.by,
-  "transactionId": p.transactionId,
+  "externalId": Js.Nullable.fromOption(p.externalId),
+  "method": p.method |> PaymentMethod.toString,
 };
 
 let fromJs = p => {
@@ -25,5 +43,6 @@ let fromJs = p => {
   total: p##total,
   on: p##on,
   by: p##by,
-  transactionId: p##transactionId,
+  externalId: Js.Nullable.toOption(p##externalId),
+  method: p##method |> PaymentMethod.fromString,
 };
