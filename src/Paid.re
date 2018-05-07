@@ -5,6 +5,7 @@ type t = {
   total: Money.t,
   on: Date.t,
   by: string,
+  transactionId: string,
 };
 
 let toJs = (p: t) => {
@@ -14,6 +15,7 @@ let toJs = (p: t) => {
   "total": p.total,
   "on": p.on,
   "by": p.by,
+  "transactionId": p.transactionId,
 };
 
 let fromJs = p => {
@@ -23,4 +25,5 @@ let fromJs = p => {
   total: p##total,
   on: p##on,
   by: p##by,
+  transactionId: p##transactionId,
 };
