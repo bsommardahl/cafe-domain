@@ -17,7 +17,7 @@ let toJs = (p: t) => {
   "on": p.on,
   "by": p.by,
   "externalId": Js.Nullable.fromOption(p.externalId),
-  "method": p.method |> PaymentMethod.toJs,
+  "paymentMethod": p.method |> PaymentMethod.toJs,
 };
 
 let fromJs = p => {
@@ -28,5 +28,5 @@ let fromJs = p => {
   on: p##on,
   by: p##by,
   externalId: Js.Nullable.toOption(p##externalId),
-  method: p##method |> PaymentMethod.fromJs,
+  method: p##paymentMethod |> PaymentMethod.fromJs,
 };
