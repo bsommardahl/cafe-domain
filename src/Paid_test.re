@@ -15,7 +15,7 @@ describe("Paid module", () =>
         total: 12300,
         on: 412341324.,
         by: "Byron",
-        externalId: Some("id"),
+        externalId: "id",
         method: card,
       };
       test("he method should still be card", () => {
@@ -33,7 +33,7 @@ describe("Paid module", () =>
         total: 12300,
         on: 412341324.,
         by: "Byron",
-        externalId: Some("id"),
+        externalId: "id",
         method: cash,
       };
       test("the method should still be cash", () => {

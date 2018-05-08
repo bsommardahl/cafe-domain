@@ -5,7 +5,7 @@ type t = {
   total: Money.t,
   on: Date.t,
   by: string,
-  externalId: option(string),
+  externalId: string,
   method: PaymentMethod.t,
 };
 
@@ -16,7 +16,7 @@ let toJs = (p: t) => {
   "total": p.total,
   "on": p.on,
   "by": p.by,
-  "externalId": Js.Nullable.fromOption(p.externalId),
+  "externalId": p.externalId,
   "paymentMethod": p.method |> PaymentMethod.toJs,
 };
 
@@ -27,6 +27,6 @@ let fromJs = p => {
   total: p##total,
   on: p##on,
   by: p##by,
-  externalId: Js.Nullable.toOption(p##externalId),
+  externalId: p##externalId,
   method: p##paymentMethod |> PaymentMethod.fromJs,
 };
