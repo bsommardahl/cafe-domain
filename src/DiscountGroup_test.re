@@ -24,7 +24,7 @@ let buildOrder = (items, discounts) : Order.t => {
       tax: 0,
       total: 0,
       externalId: None,
-      method: Cash,
+      method: PaymentMethod.default,
     }),
   returned: None,
   createdOn: 0.0,
