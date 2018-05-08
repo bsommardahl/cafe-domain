@@ -1,13 +1,14 @@
+[@bs.deriving jsConverter]
 type t = {
   name: string,
   hasExternalId: bool,
 };
 
-let toJs = t => {"name": t.name, "hasExternalId": t.hasExternalId};
-
-let fromJs = t => {name: t##name, hasExternalId: t##hasExternalId};
-
 let default = {name: "paymentMethod.cash", hasExternalId: false};
+
+let toJs = tToJs;
+
+let fromJs = tFromJs;
 
 let tempAllPaymentMethods = [
   default,
