@@ -31,7 +31,7 @@ let buildOrder = (items, discounts) : Order.t => {
   discounts,
   lastUpdated: None,
   removed: false,
-  meta: "",
+  meta: Js.Json.parseExn("{}"),
 };
 
 let buildDiscount = (name: string, percent: Percent.t) : Discount.t => {

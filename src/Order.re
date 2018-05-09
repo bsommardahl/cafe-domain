@@ -8,7 +8,7 @@ type t = {
   createdOn: float,
   lastUpdated: option(float),
   removed: bool,
-  meta: string,
+  meta: Js.Json.t,
 };
 
 type updateOrder = {
@@ -18,7 +18,7 @@ type updateOrder = {
   discounts: list(Discount.t),
   returned: option(Return.t),
   paid: option(Paid.t),
-  meta: string,
+  meta: Js.Json.t,
 };
 
 type orderVm = {
@@ -31,7 +31,7 @@ type orderVm = {
   createdOn: float,
   lastUpdated: option(float),
   removed: bool,
-  meta: string,
+  meta: Js.Json.t,
 };
 
 type newOrder = {
