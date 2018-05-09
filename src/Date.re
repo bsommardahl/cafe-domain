@@ -44,6 +44,14 @@ let toISODate = t =>
     }
   );
 
+let fromISODate = iso : t => {
+  let p = iso |> Js.String.split("-");
+  let d = p[1] ++ "/" ++ p[2] ++ "/" ++ p[0];
+  let parsed = d |> Js.Date.parse;
+  Js.log(parsed);
+  parsed |> Js.Date.getTime;
+};
+
 let toDisplayTime = t =>
   Js.Date.fromFloat(t)
   |> (

@@ -14,6 +14,14 @@ describe("Date functions", () => {
       )
     )
   );
+  describe("when converting from sortable date to date float", () =>
+    describe("and sortable date is valid", () =>
+      test("it should return the corresponding date", () =>
+        expect(unixTime |> Date.toISODate |> Date.fromISODate)
+        |> toEqual(unixTime |> Date.startOfDay)
+      )
+    )
+  );
   describe("when getting the start of the day", () =>
     test("it should return the corresponding date at midnight", () =>
       expect(unixTime |> Date.startOfDay |> Date.toDisplay)
