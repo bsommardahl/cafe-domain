@@ -45,6 +45,12 @@ describe("Date functions", () => {
         expect(unixTime |> Date.toDisplay) |> toEqual(formatted)
       )
     );
+    describe("a formatted date/time to a float", () =>
+      test("it should parse the human readable format to a float", () =>
+        expect(unixTime |> Date.toDisplay |> Date.fromDisplay)
+        |> toEqual(unixTime)
+      )
+    );
   });
   describe("when validating", () => {
     let valid = "Thu Mar 29 2018 13:08:27 GMT-0600 (CST)";

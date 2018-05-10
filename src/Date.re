@@ -74,6 +74,31 @@ let toShortTime = toDisplayTime;
 
 let toDisplay = t => (t |> toDisplayDate) ++ " " ++ (t |> toDisplayTime);
 
+let fromDisplay = f => {
+  let p = f |> Js.String.split(" ");
+  let d_es = p[0];
+  let d_es_p = d_es |> Js.String.split("-");
+  let month = (d_es_p[1] |> float_of_string) -. 1.;
+  let day = d_es_p[0] |> float_of_string;
+  let year = d_es_p[2] |> float_of_string;
+  let t_p = p[1] |> Js.String.split(":");
+  let ampm = p[2];
+  let hours = (t_p[0] |> float_of_string) +. (ampm === "PM" ? 12. : 0.);
+  let minutes = t_p[1] |> float_of_string;
+  let newDate =
+    Js.Date.make()
+    |. Js.Date.setFullYearMD(~year, ~month, ~date=day, ())
+    |> Js.Date.fromFloat
+    |. Js.Date.setHoursMSMs(
+         ~hours,
+         ~minutes,
+         ~seconds=0.,
+         ~milliseconds=0.,
+         (),
+       );
+  newDate;
+};
+
 let oneMonthBefore = t => t -. day *. 30.44;
 
 let addDays = (d: int, t) : t => t +. day *. float_of_int(d);
