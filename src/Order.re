@@ -179,7 +179,7 @@ let toJs = (order: t) => {
   "createdOn": order.createdOn,
 };
 
-let newOrderToJs = (order: newOrder, createdOn: Date.t) => {
+let newOrderToJs = (order: newOrder) => {
   "customerName": order.customerName,
   "orderItems":
     order.orderItems
@@ -187,7 +187,7 @@ let newOrderToJs = (order: newOrder, createdOn: Date.t) => {
     |> Array.of_list,
   "discounts":
     order.discounts |> List.map(d => d |> Discount.mapToJs) |> Array.of_list,
-  "createdOn": createdOn,
+  "createdOn": Date.now(),
   "paid":
     switch (order.paid) {
     | None => Js.Nullable.undefined
