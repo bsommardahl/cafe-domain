@@ -51,12 +51,12 @@ module Behavior = {
     | AwaitResponse;
   let toString = b =>
     switch (b) {
-    | FireAndForget => "fireAndForget"
+    | FireAndForget => "FireAndForget"
     | AwaitResponse => "awaitResponse"
     };
   let fromString = s =>
     switch (s) {
-    | "awaitResponse" => AwaitResponse
+    | "AwaitResponse" => AwaitResponse
     | _ => FireAndForget
     };
 };
