@@ -33,7 +33,7 @@ let buildOrder = items : Order.t => {
   discounts: [],
   lastUpdated: None,
   removed: false,
-  meta: Js.Json.parseExn("{}"),
+  meta: Js.Dict.empty(),
 };
 
 let buildSale = (name, salePrice, taxRate: int) : Sale.t => {

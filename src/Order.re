@@ -8,7 +8,7 @@ type t = {
   createdOn: float,
   lastUpdated: option(float),
   removed: bool,
-  meta: Js.Json.t,
+  meta: Js.Dict.t(string),
 };
 
 type updateOrder = {
@@ -18,7 +18,7 @@ type updateOrder = {
   discounts: list(Discount.t),
   returned: option(Return.t),
   paid: option(Paid.t),
-  meta: Js.Json.t,
+  meta: Js.Dict.t(string),
 };
 
 type orderVm = {
@@ -31,7 +31,7 @@ type orderVm = {
   createdOn: float,
   lastUpdated: option(float),
   removed: bool,
-  meta: Js.Json.t,
+  meta: Js.Dict.t(string),
 };
 
 type newOrder = {
@@ -40,6 +40,10 @@ type newOrder = {
   discounts: list(Discount.t),
   paid: option(Paid.t),
 };
+
+let fromJsToDict = js : Js.Dict.t(string) => Js.Dict.fromArray(js);
+
+let toJsFromDict = (dict: Js.Dict.t(string)) => dict |> Js.Dict.entries;
 
 let mapOrderFromJs = orderJs : t => {
   id: orderJs##_id,
@@ -70,7 +74,7 @@ let mapOrderFromJs = orderJs : t => {
     | Some(js) => Some(js |> Return.fromJs)
     },
   lastUpdated: JsUtils.convertFloatOption(orderJs##lastUpdated),
-  meta: orderJs##meta,
+  meta: orderJs##meta |> fromJsToDict,
   removed: false,
 };
 
@@ -151,7 +155,7 @@ let updateOrderToJs =
     | None => Js.Nullable.undefined
     | Some(ret) => Js.Nullable.return(ret |> Return.toJs)
     },
-  "meta": originalOrder.meta,
+  "meta": originalOrder.meta |> toJsFromDict,
   "createdOn": originalOrder.createdOn,
 };
 
@@ -175,7 +179,7 @@ let toJs = (order: t) => {
     | None => Js.Nullable.undefined
     | Some(returned) => Js.Nullable.return(returned |> Return.toJs)
     },
-  "meta": order.meta,
+  "meta": order.meta |> toJsFromDict,
   "createdOn": order.createdOn,
 };
 
