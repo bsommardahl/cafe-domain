@@ -41,7 +41,11 @@ type newOrder = {
   paid: option(Paid.t),
 };
 
-let fromJsToDict = js : Js.Dict.t(string) => Js.Dict.fromArray(js);
+let fromJsToDict = js : Js.Dict.t(string) =>
+  switch (Js.Nullable.toOption(js)) {
+  | None => Js.Dict.empty()
+  | Some(js) => js |> Js.Dict.fromArray
+  };
 
 let toJsFromDict = (dict: Js.Dict.t(string)) => dict |> Js.Dict.entries;
 
@@ -74,11 +78,7 @@ let mapOrderFromJs = orderJs : t => {
     | Some(js) => Some(js |> Return.fromJs)
     },
   lastUpdated: JsUtils.convertFloatOption(orderJs##lastUpdated),
-  meta:
-    switch (Js.Nullable.toOption(orderJs##meta)) {
-    | None => Js.Dict.empty()
-    | Some(js) => js |> fromJsToDict
-    },
+  meta: orderJs##meta |> fromJsToDict,
   removed: false,
 };
 
