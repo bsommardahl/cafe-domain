@@ -8,7 +8,7 @@ type t = {
   createdOn: float,
   lastUpdated: option(float),
   removed: bool,
-  meta: Js.Dict.t(string),
+  meta: Js.Json.t,
 };
 
 type updateOrder = {
@@ -18,7 +18,7 @@ type updateOrder = {
   discounts: list(Discount.t),
   returned: option(Return.t),
   paid: option(Paid.t),
-  meta: Js.Dict.t(string),
+  meta: Js.Json.t,
 };
 
 type orderVm = {
@@ -31,7 +31,7 @@ type orderVm = {
   createdOn: float,
   lastUpdated: option(float),
   removed: bool,
-  meta: Js.Dict.t(string),
+  meta: Js.Json.t,
 };
 
 type newOrder = {
@@ -41,13 +41,13 @@ type newOrder = {
   paid: option(Paid.t),
 };
 
-let fromJsToDict = js : Js.Dict.t(string) =>
-  switch (Js.Nullable.toOption(js)) {
-  | None => Js.Dict.empty()
-  | Some(js) => js |> Js.Dict.fromArray
+let jsonToString = (json: Js.Json.t) =>
+  switch (Js.Json.stringifyAny(json)) {
+  | None => "{}"
+  | Some(str) => str
   };
 
-let toJsFromDict = (dict: Js.Dict.t(string)) => dict |> Js.Dict.entries;
+let stringToJson = (str: string) : Js.Json.t => Js.Json.parseExn(str);
 
 let mapOrderFromJs = orderJs : t => {
   id: orderJs##_id,
@@ -78,7 +78,11 @@ let mapOrderFromJs = orderJs : t => {
     | Some(js) => Some(js |> Return.fromJs)
     },
   lastUpdated: JsUtils.convertFloatOption(orderJs##lastUpdated),
-  meta: orderJs##meta |> fromJsToDict,
+  meta:
+    switch (Js.Nullable.toOption(orderJs##meta)) {
+    | None => "" |> stringToJson
+    | Some(js) => js |> stringToJson
+    },
   removed: false,
 };
 
@@ -159,7 +163,7 @@ let updateOrderToJs =
     | None => Js.Nullable.undefined
     | Some(ret) => Js.Nullable.return(ret |> Return.toJs)
     },
-  "meta": originalOrder.meta |> toJsFromDict,
+  "meta": originalOrder.meta |> jsonToString,
   "createdOn": originalOrder.createdOn,
 };
 
@@ -183,7 +187,7 @@ let toJs = (order: t) => {
     | None => Js.Nullable.undefined
     | Some(returned) => Js.Nullable.return(returned |> Return.toJs)
     },
-  "meta": order.meta |> toJsFromDict,
+  "meta": order.meta |> jsonToString,
   "createdOn": order.createdOn,
 };
 
