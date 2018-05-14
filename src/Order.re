@@ -79,7 +79,7 @@ let mapOrderFromJs = orderJs : t => {
     },
   lastUpdated: JsUtils.convertFloatOption(orderJs##lastUpdated),
   meta:
-    switch (Js.Null_undefined.toOption(orderJs##meta)) {
+    switch (Js.Undefined.toOption(orderJs##meta)) {
     | None => Js.Json.parseExn("{}")
     | Some(js) => js |> stringToJson
     },
