@@ -8,7 +8,7 @@ type t = {
   createdOn: float,
   lastUpdated: option(float),
   removed: bool,
-  meta: Js.Json.t,
+  meta: option(Js.Json.t),
 };
 
 type updateOrder = {
@@ -18,7 +18,7 @@ type updateOrder = {
   discounts: list(Discount.t),
   returned: option(Return.t),
   paid: option(Paid.t),
-  meta: Js.Json.t,
+  meta: option(Js.Json.t),
 };
 
 type orderVm = {
@@ -31,7 +31,7 @@ type orderVm = {
   createdOn: float,
   lastUpdated: option(float),
   removed: bool,
-  meta: Js.Json.t,
+  meta: option(Js.Json.t),
 };
 
 type newOrder = {
@@ -80,8 +80,8 @@ let mapOrderFromJs = orderJs : t => {
   lastUpdated: JsUtils.convertFloatOption(orderJs##lastUpdated),
   meta:
     switch (Js.Undefined.toOption(orderJs##meta)) {
-    | None => Js.Json.parseExn("{}")
-    | Some(js) => js |> stringToJson
+    | None => None
+    | Some(js) => Some(js |> stringToJson)
     },
   removed: false,
 };
@@ -163,7 +163,11 @@ let updateOrderToJs =
     | None => Js.Nullable.undefined
     | Some(ret) => Js.Nullable.return(ret |> Return.toJs)
     },
-  "meta": originalOrder.meta |> jsonToString,
+    "meta": 
+    switch(updateOrder.meta) {
+    | None => Js.Nullable.undefined
+    | Some(meta) => Js.Nullable.return(meta |> jsonToString)
+  },
   "createdOn": originalOrder.createdOn,
 };
 
@@ -187,7 +191,11 @@ let toJs = (order: t) => {
     | None => Js.Nullable.undefined
     | Some(returned) => Js.Nullable.return(returned |> Return.toJs)
     },
-  "meta": order.meta |> jsonToString,
+  "meta": 
+    switch(order.meta) {
+    | None => Js.Nullable.undefined
+    | Some(meta) => Js.Nullable.return(meta |> jsonToString)
+  },
   "createdOn": order.createdOn,
 };
 
