@@ -53,7 +53,7 @@ let mapOrderFromJs = orderJs : t => {
   id: orderJs##_id,
   customerName: orderJs##customerName,
   orderItems:
-    switch (Js.Nullable.toOption(orderJs##orderItems)) {
+    switch (Js.Null_undefined.toOption(orderJs##orderItems)) {
     | Some(orderItems) =>
       orderItems
       |> Array.map(i => OrderItem.mapOrderItemFromJs(i))
@@ -68,12 +68,12 @@ let mapOrderFromJs = orderJs : t => {
     | None => []
     },
   paid:
-    switch (Js.Nullable.toOption(orderJs##paid)) {
+    switch (Js.Null_undefined.toOption(orderJs##paid)) {
     | None => None
     | Some(js) => Some(js |> Paid.fromJs)
     },
   returned:
-    switch (Js.Nullable.toOption(orderJs##returned)) {
+    switch (Js.Null_undefined.toOption(orderJs##returned)) {
     | None => None
     | Some(js) => Some(js |> Return.fromJs)
     },
