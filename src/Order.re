@@ -78,11 +78,7 @@ let mapOrderFromJs = orderJs : t => {
     | Some(js) => Some(js |> Return.fromJs)
     },
   lastUpdated: JsUtils.convertFloatOption(orderJs##lastUpdated),
-  meta:
-    switch (Js.Nullable.toOption(orderJs##meta)) {
-    | None => "{}" |> stringToJson
-    | Some(js) => js |> stringToJson
-    },
+  meta: orderJs##meta |> stringToJson,
   removed: false,
 };
 
