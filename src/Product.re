@@ -4,11 +4,19 @@ type t = {
   name: string,
   tags: list(string),
   department: string,
+  startDate: option(Date.t),
+  endDate: option(Date.t),
   suggestedPrice: int,
   onHand: int,
   taxCalculation: Tax.taxCalculationMethod,
 };
 
+let fromOptionalDate = (d) => switch(d){
+  | None => 0.0
+  | Some(date)=> date
+  };
+let toOptionalDate = (d) => Js.Nullable.toOption(d);
+  
 module NewProduct = {
   type t = {
     sku: string,
@@ -16,6 +24,8 @@ module NewProduct = {
     tags: list(string),
     onHand: int,
     department: string,
+    startDate: option(Date.t),
+    endDate: option(Date.t),
     suggestedPrice: int,
     taxCalculation: Tax.taxCalculationMethod,
   };
@@ -25,6 +35,8 @@ module NewProduct = {
     "suggestedPrice": prod.suggestedPrice,
     "onHand": prod.onHand,
     "department": prod.department,
+    "startDate": fromOptionalDate(prod.startDate),
+    "endDate": fromOptionalDate(prod.endDate),
     "tags": prod.tags |> Array.of_list,
     "taxCalculation": prod.taxCalculation |> Tax.Calculation.toDelimitedString,
   };
@@ -38,6 +50,8 @@ let mapFromJs = prodJs : t => {
   tags: prodJs##tags,
   onHand: prodJs##onHand,
   department: prodJs##department,
+  startDate: toOptionalDate(prodJs##startDate),
+  endDate: toOptionalDate(prodJs##endDate),
   taxCalculation: prodJs##taxCalculation |> Tax.Calculation.toMethod,
 };
 
@@ -49,6 +63,8 @@ let mapToJsWithRev = (id: string, rev: option(string), prod: t) => {
   "suggestedPrice": prod.suggestedPrice,
   "tags": prod.tags,
   "onHand": prod.onHand,
+  "startDate": prod.startDate |> fromOptionalDate,
+  "endDate": fromOptionalDate(prod.endDate),
   "department": prod.department,
   "taxCalculation": prod.taxCalculation |> Tax.Calculation.toDelimitedString,
 };

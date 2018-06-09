@@ -123,3 +123,5 @@ let isValid = (formattedDate: string) : bool => {
   | _ => true
   };
 };
+
+let fromString = str => str |> float_of_string;
