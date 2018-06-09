@@ -125,3 +125,8 @@ let isValid = (formattedDate: string) : bool => {
 };
 
 let fromString = str => str |> float_of_string;
+
+let toDisplayFromOption = d => switch(d){
+| None => ""
+| Some(d) => d |> toDisplay
+};
