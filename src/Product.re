@@ -4,6 +4,7 @@ type t = {
   name: string,
   tags: list(string),
   suggestedPrice: int,
+  onHand: int,
   taxCalculation: Tax.taxCalculationMethod,
 };
 
@@ -12,6 +13,7 @@ module NewProduct = {
     sku: string,
     name: string,
     tags: list(string),
+    onHand: int,
     suggestedPrice: int,
     taxCalculation: Tax.taxCalculationMethod,
   };
@@ -19,6 +21,7 @@ module NewProduct = {
     "sku": prod.sku,
     "name": prod.name,
     "suggestedPrice": prod.suggestedPrice,
+    "onHand": prod.onHand,
     "tags": prod.tags |> Array.of_list,
     "taxCalculation": prod.taxCalculation |> Tax.Calculation.toDelimitedString,
   };
@@ -30,6 +33,7 @@ let mapFromJs = prodJs : t => {
   name: prodJs##name,
   suggestedPrice: prodJs##suggestedPrice,
   tags: prodJs##tags,
+  onHand: prodJs##onHand,
   taxCalculation: prodJs##taxCalculation |> Tax.Calculation.toMethod,
 };
 
@@ -40,6 +44,7 @@ let mapToJsWithRev = (id: string, rev: option(string), prod: t) => {
   "name": prod.name,
   "suggestedPrice": prod.suggestedPrice,
   "tags": prod.tags,
+  "onHand": prod.onHand,
   "taxCalculation": prod.taxCalculation |> Tax.Calculation.toDelimitedString,
 };
 
