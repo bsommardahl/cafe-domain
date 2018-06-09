@@ -2,20 +2,21 @@ open Jest;
 
 open Expect;
 
-let buildProduct = (name: string, tags: list(string)) : Product.t => {
+let buildProduct = (name: string, tags: list(string), startDate: option(Date.t), endDate: option(Date.t)) : Product.t => {
   id: "123",
   sku: "123",
   name,
   department: "dept",
   onHand: 0,
-  startDate: None,
-  endDate: None,
+  startDate: startDate,
+  endDate: endDate,
   tags,
   suggestedPrice: 1000,
   taxCalculation: Exempt,
 };
 
-describe("product related utilities", () =>
+describe("product related utilities", () =>{
+
   describe("js obj mapping", () =>
     test("it should be able to map an existing product from js", () => {
       let js = {
@@ -34,8 +35,8 @@ describe("product related utilities", () =>
       let product: Product.t = js |> Product.mapFromJs;
       expect(product.id) |> toEqual(js##_id);
     })
-  )
-);
+  );
+  });
 
 describe("product data functions", () => {
   describe("filtering products by tag", () =>
@@ -44,15 +45,15 @@ describe("product data functions", () => {
         Product.filterProducts(
           "a",
           [
-            buildProduct("plate", ["a"]),
-            buildProduct("platter", ["b"]),
-            buildProduct("bowl", ["a"]),
+            buildProduct("plate", ["a"], None, None),
+            buildProduct("platter", ["b"], None, None),
+            buildProduct("bowl", ["a"], None, None),
           ],
         );
       expect(result)
       |> toEqual([
-           buildProduct("plate", ["a"]),
-           buildProduct("bowl", ["a"]),
+           buildProduct("plate", ["a"], None, None),
+           buildProduct("bowl", ["a"], None, None),
          ]);
     })
   );
@@ -60,12 +61,12 @@ describe("product data functions", () => {
     test("it should return a list of unique tags", (_) => {
       let result =
         Product.getTags([
-          buildProduct("coffee", ["a"]),
-          buildProduct("latte", ["b"]),
-          buildProduct("macchiato", ["a"]),
-          buildProduct("white", ["c", "d", "a"]),
-          buildProduct("black", ["b"]),
-          buildProduct("au lait", ["a"]),
+          buildProduct("coffee", ["a"], None, None),
+          buildProduct("latte", ["b"], None, None),
+          buildProduct("macchiato", ["a"], None, None),
+          buildProduct("white", ["c", "d", "a"], None, None),
+          buildProduct("black", ["b"], None, None),
+          buildProduct("au lait", ["a"], None, None),
         ]);
       expect(result |> List.length) |> toBe(4) |> ignore;
       expect(result) |> toEqual(["a", "b", "c", "d"]);
