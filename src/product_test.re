@@ -2,21 +2,28 @@ open Jest;
 
 open Expect;
 
-let buildProduct = (name: string, tags: list(string), startDate: option(Date.t), endDate: option(Date.t)) : Product.t => {
+let buildProduct =
+    (
+      name: string,
+      tags: list(string),
+      startDate: option(Date.t),
+      endDate: option(Date.t),
+    )
+    : Product.t => {
   id: "123",
   sku: "123",
   name,
   department: "dept",
+  unit: "pieces",
   onHand: 0,
-  startDate: startDate,
-  endDate: endDate,
+  startDate,
+  endDate,
   tags,
   suggestedPrice: 1000,
   taxCalculation: Exempt,
 };
 
-describe("product related utilities", () =>{
-
+describe("product related utilities", () =>
   describe("js obj mapping", () =>
     test("it should be able to map an existing product from js", () => {
       let js = {
@@ -25,6 +32,7 @@ describe("product related utilities", () =>{
         "sku": "fasdf",
         "name": "fasdf",
         "department": "dept",
+        "unit": "pieces",
         "startDate": Js.Nullable.undefined,
         "endDate": Js.Nullable.undefined,
         "onHand": 0,
@@ -35,8 +43,8 @@ describe("product related utilities", () =>{
       let product: Product.t = js |> Product.mapFromJs;
       expect(product.id) |> toEqual(js##_id);
     })
-  );
-  });
+  )
+);
 
 describe("product data functions", () => {
   describe("filtering products by tag", () =>
@@ -57,8 +65,8 @@ describe("product data functions", () => {
          ]);
     })
   );
-  describe("getting only unique tags", (_) =>
-    test("it should return a list of unique tags", (_) => {
+  describe("getting only unique tags", _ =>
+    test("it should return a list of unique tags", _ => {
       let result =
         Product.getTags([
           buildProduct("coffee", ["a"], None, None),
