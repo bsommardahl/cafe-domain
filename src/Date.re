@@ -48,8 +48,23 @@ let fromISODate = iso : t => {
   let p = iso |> Js.String.split("-");
   let d = p[1] ++ "/" ++ p[2] ++ "/" ++ p[0];
   let parsed = d |> Js.Date.parse;
-  Js.log(parsed);
   parsed |> Js.Date.getTime;
+};
+
+let fromISODateAndTime = (time, iso) => {
+  let t = time |> Js.String.split(":");
+  let newDate =
+    iso
+    |> fromISODate
+    |> Js.Date.fromFloat
+    |. Js.Date.setHoursMSMs(
+         ~hours=t[0] |> float_of_string,
+         ~minutes=t[1] |> float_of_string,
+         ~seconds=0.,
+         ~milliseconds=0.,
+         (),
+       );
+  newDate;
 };
 
 let toDisplayTime = t =>
@@ -126,7 +141,18 @@ let isValid = (formattedDate: string) : bool => {
 
 let fromString = str => str |> float_of_string;
 
-let toDisplayFromOption = d => switch(d){
-| None => ""
-| Some(d) => d |> toDisplay
-};
+let toDisplayFromOption = d =>
+  switch (d) {
+  | None => ""
+  | Some(d) => d |> toDisplay
+  };
+
+let to24HourTime = t =>
+  Js.Date.fromFloat(t)
+  |> (
+    d => {
+      let hours = d |> Js.Date.getHours |> int_of_float;
+      let minutes = d |> Js.Date.getMinutes |> int_of_float;
+      string_of_int(hours) ++ ":" ++ (minutes |> toStringWith2Digits);
+    }
+  );

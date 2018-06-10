@@ -22,6 +22,23 @@ describe("Date functions", () => {
       )
     )
   );
+  Only.describe("when converting from sortable date to date float", () =>
+    describe("and sortable date is valid", () =>
+      test("it should return the corresponding date", () =>
+        expect(
+          unixTime
+          |> Date.toISODate
+          |> Date.fromISODateAndTime(unixTime |> Date.to24HourTime),
+        )
+        |> toEqual(unixTime)
+      )
+    )
+  );
+  describe("when converting from date to 24-hour time", () =>
+    test("it should return just the time", () =>
+      expect(unixTime |> Date.to24HourTime) |> toEqual("21:00")
+    )
+  );
   describe("when getting the start of the day", () =>
     test("it should return the corresponding date at midnight", () =>
       expect(unixTime |> Date.startOfDay |> Date.toDisplay)
