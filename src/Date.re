@@ -118,6 +118,13 @@ let oneMonthBefore = t => t -. day *. 30.44;
 
 let addDays = (d: int, t) : t => t +. day *. float_of_int(d);
 
+let addYears = (y: int, t) : t => {
+  let jsDate = t |> Js.Date.fromFloat;
+  let year = (jsDate |> Js.Date.getFullYear) +. (y |> float_of_int);
+  let _ = Js.Date.setFullYearMD(jsDate, ~year);
+  jsDate |> Js.Date.getTime;
+};
+
 let startOfDay = (d: t) : t => {
   let jsDate = d |> Js.Date.fromFloat;
   let _ = Js.Date.setHoursMS(jsDate, ~hours=0., ~minutes=0., ~seconds=0., ());

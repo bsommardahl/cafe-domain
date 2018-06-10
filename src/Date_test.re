@@ -22,7 +22,7 @@ describe("Date functions", () => {
       )
     )
   );
-  Only.describe("when converting from sortable date to date float", () =>
+  describe("when converting from sortable date to date float", () =>
     describe("and sortable date is valid", () =>
       test("it should return the corresponding date", () =>
         expect(
@@ -37,6 +37,12 @@ describe("Date functions", () => {
   describe("when converting from date to 24-hour time", () =>
     test("it should return just the time", () =>
       expect(unixTime |> Date.to24HourTime) |> toEqual("21:00")
+    )
+  );
+  describe("when adding years", () =>
+    test("it should return a new date with the years added", () =>
+      expect(unixTime |> Date.addYears(5) |> Date.toDisplay)
+      |> toEqual("28-3-2023 9:00 PM")
     )
   );
   describe("when getting the start of the day", () =>
