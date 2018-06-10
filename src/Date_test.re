@@ -7,6 +7,13 @@ let unixTime = 1522292400000.;
 let formatted = "28-3-2018 9:00 PM";
 
 describe("Date functions", () => {
+  Only.describe(
+    "when converting from date float to sortable date/time (timestamp)", () =>
+    test("it should return the corresponding date", () =>
+      expect(unixTime |> Date.toTimestamp |> Date.fromTimestamp)
+      |> toEqual(unixTime)
+    )
+  );
   describe("when converting from date float to sortable date", () =>
     describe("and float is a valid date", () =>
       test("it should return the corresponding date in YYYY-MM-DD format", () =>

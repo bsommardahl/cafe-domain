@@ -27,7 +27,6 @@ let toStringWith2Digits = s =>
   } else {
     string_of_int(s);
   };
-
 let toISODate = t =>
   Js.Date.fromFloat(t)
   |> (
@@ -163,3 +162,11 @@ let to24HourTime = t =>
       string_of_int(hours) ++ ":" ++ (minutes |> toStringWith2Digits);
     }
   );
+
+let toTimestamp = (t: float) =>
+  (t |> toISODate) ++ "T" ++ (t |> to24HourTime);
+
+let fromTimestamp = (ts: string) => {
+  let d = ts |> Js.String.split("T");
+  d[0] |> fromISODateAndTime(d[1]);
+};
