@@ -19,6 +19,7 @@ let buildProduct =
   startDate,
   endDate,
   tags,
+  products: [],
   suggestedPrice: 1000,
   taxCalculation: Exempt,
 };
@@ -38,6 +39,7 @@ describe("product related utilities", () =>
         "onHand": 0,
         "suggestedPrice": 3543534,
         "tags": ["fsdafsda"],
+        "products": [],
         "taxCalculation": "exempt|",
       };
       let product: Product.t = js |> Product.mapFromJs;

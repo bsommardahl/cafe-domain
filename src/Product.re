@@ -10,6 +10,7 @@ type t = {
   onHand: int,
   unit: string,
   taxCalculation: Tax.taxCalculationMethod,
+  products: list(string),
 };
 
 let fromOptionalDate = d =>
@@ -31,6 +32,7 @@ module NewProduct = {
     suggestedPrice: int,
     unit: string,
     taxCalculation: Tax.taxCalculationMethod,
+    products: list(string),
   };
   let mapToJs = (prod: t) => {
     "sku": prod.sku,
@@ -43,6 +45,7 @@ module NewProduct = {
     "endDate": fromOptionalDate(prod.endDate),
     "tags": prod.tags |> Array.of_list,
     "taxCalculation": prod.taxCalculation |> Tax.Calculation.toDelimitedString,
+    "products": prod.products |> Array.of_list,
   };
 };
 
@@ -52,6 +55,7 @@ let mapFromJs = prodJs : t => {
   name: prodJs##name,
   suggestedPrice: prodJs##suggestedPrice,
   tags: prodJs##tags,
+  products: prodJs##products,
   onHand: prodJs##onHand,
   department: prodJs##department,
   unit: prodJs##unit,
@@ -67,6 +71,7 @@ let mapToJsWithRev = (id: string, rev: option(string), prod: t) => {
   "name": prod.name,
   "suggestedPrice": prod.suggestedPrice,
   "tags": prod.tags,
+  "products": prod.products,
   "onHand": prod.onHand,
   "startDate": prod.startDate |> fromOptionalDate,
   "endDate": fromOptionalDate(prod.endDate),
