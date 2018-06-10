@@ -120,8 +120,8 @@ let addDays = (d: int, t) : t => t +. day *. float_of_int(d);
 let addYears = (y: int, t) : t => {
   let jsDate = t |> Js.Date.fromFloat;
   let year = (jsDate |> Js.Date.getFullYear) +. (y |> float_of_int);
-  let _ = Js.Date.setFullYearMD(jsDate, ~year);
-  jsDate |> Js.Date.getTime;
+  let d = Js.Date.setFullYear(jsDate, year);
+  d |> Js.Date.fromFloat |> Js.Date.getTime;
 };
 
 let startOfDay = (d: t) : t => {
