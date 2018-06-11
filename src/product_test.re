@@ -39,7 +39,7 @@ describe("product related utilities", () =>
         "onHand": 0,
         "suggestedPrice": 3543534,
         "tags": ["fsdafsda"],
-        "products": [],
+        "products": Js.Nullable.undefined,
         "taxCalculation": "exempt|",
       };
       let product: Product.t = js |> Product.mapFromJs;
