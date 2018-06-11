@@ -45,7 +45,7 @@ module NewProduct = {
     "endDate": fromOptionalDate(prod.endDate),
     "tags": prod.tags |> Array.of_list,
     "taxCalculation": prod.taxCalculation |> Tax.Calculation.toDelimitedString,
-    "products": Js.Nullable.return(prod.products |> Array.of_list),
+    "products": prod.products |> Array.of_list,
   };
 };
 
@@ -57,8 +57,8 @@ let mapFromJs = prodJs : t => {
   tags: prodJs##tags,
   products:
     switch (Js.Nullable.toOption(prodJs##products)) {
+    | Some(products) => products |> Array.to_list
     | None => []
-    | Some(arr) => arr
     },
   onHand: prodJs##onHand,
   department: prodJs##department,
@@ -75,7 +75,7 @@ let mapToJsWithRev = (id: string, rev: option(string), prod: t) => {
   "name": prod.name,
   "suggestedPrice": prod.suggestedPrice,
   "tags": prod.tags,
-  "products": Js.Nullable.return(prod.products |> Array.of_list),
+  "products": prod.products |> Array.of_list,
   "onHand": prod.onHand,
   "startDate": prod.startDate |> fromOptionalDate,
   "endDate": fromOptionalDate(prod.endDate),
