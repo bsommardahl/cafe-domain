@@ -10,7 +10,7 @@ type t = {
   onHand: int,
   unit: string,
   taxCalculation: Tax.taxCalculationMethod,
-  products: list(string),
+  products: list(ChildProduct.t),
 };
 
 let fromOptionalDate = d =>
@@ -32,7 +32,7 @@ module NewProduct = {
     suggestedPrice: int,
     unit: string,
     taxCalculation: Tax.taxCalculationMethod,
-    products: list(string),
+    products: list(ChildProduct.t),
   };
   let mapToJs = (prod: t) => {
     "sku": prod.sku,
@@ -45,7 +45,8 @@ module NewProduct = {
     "endDate": fromOptionalDate(prod.endDate),
     "tags": prod.tags |> Array.of_list,
     "taxCalculation": prod.taxCalculation |> Tax.Calculation.toDelimitedString,
-    "products": prod.products |> Array.of_list,
+    "products":
+      prod.products |> List.map(x => x |> ChildProduct.toJs) |> Array.of_list,
   };
 };
 
@@ -57,7 +58,8 @@ let mapFromJs = prodJs : t => {
   tags: prodJs##tags,
   products:
     switch (Js.Nullable.toOption(prodJs##products)) {
-    | Some(products) => products |> Array.to_list
+    | Some(products) =>
+      products |> Array.to_list |> List.map(x => x |> ChildProduct.fromJs)
     | None => []
     },
   onHand: prodJs##onHand,
@@ -75,7 +77,8 @@ let mapToJsWithRev = (id: string, rev: option(string), prod: t) => {
   "name": prod.name,
   "suggestedPrice": prod.suggestedPrice,
   "tags": prod.tags,
-  "products": prod.products |> Array.of_list,
+  "products":
+    prod.products |> List.map(x => x |> ChildProduct.toJs) |> Array.of_list,
   "onHand": prod.onHand,
   "startDate": prod.startDate |> fromOptionalDate,
   "endDate": fromOptionalDate(prod.endDate),
