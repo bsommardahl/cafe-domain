@@ -159,7 +159,7 @@ let to24HourTime = t =>
     d => {
       let hours = d |> Js.Date.getHours |> int_of_float;
       let minutes = d |> Js.Date.getMinutes |> int_of_float;
-      string_of_int(hours) ++ ":" ++ (minutes |> toStringWith2Digits);
+      (hours |> toStringWith2Digits) ++ ":" ++ (minutes |> toStringWith2Digits);
     }
   );
 
