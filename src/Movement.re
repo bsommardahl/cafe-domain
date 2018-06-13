@@ -5,7 +5,7 @@ type t = {
 
 let fromJs = js : t => {
   product: js##product |> Product.mapFromJs,
-  quantity: js##quantity |> Number.fromString,
+  quantity: js##quantity,
 };
 
 let toJs = (t: t) => {
