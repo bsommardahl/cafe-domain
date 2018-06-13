@@ -16,6 +16,7 @@ type t = {
   subTotals: list(SubTotal.t),
   tax: Money.t,
   total: Money.t,
+  movements: list(Movement.t),
 };
 
 type denormalized = {
@@ -60,6 +61,7 @@ module New = {
     subTotals: list(SubTotal.t),
     tax: Money.t,
     total: Money.t,
+    movements: list(Movement.t),
   };
   let mapToJs = (expense: t) => {
     "description": expense.description,
@@ -69,6 +71,7 @@ module New = {
     "subTotals": expense.subTotals |> List.map(s => s |> SubTotal.toJs),
     "tax": expense.tax,
     "total": expense.total,
+    "movements": expense.movements |> List.map(m => m |> Movement.toJs),
   };
 };
 
@@ -81,6 +84,7 @@ type jsT = {
   "subTotals": list(SubTotal.t),
   "tax": int,
   "total": int,
+  "movements": list(Movement.t),
 };
 
 let fromJs = expenseJs : t => {
@@ -96,6 +100,11 @@ let fromJs = expenseJs : t => {
     },
   tax: expenseJs##tax,
   total: expenseJs##total,
+  movements:
+    switch (Js.Nullable.toOption(expenseJs##movements)) {
+    | Some(movements) => movements |> List.map(m => m |> Movement.fromJs)
+    | None => []
+    },
 };
 
 let toJs = (expense: t) => {
@@ -107,6 +116,7 @@ let toJs = (expense: t) => {
   "subTotals": expense.subTotals |> List.map(s => s |> SubTotal.toJs),
   "tax": expense.tax,
   "total": expense.total,
+  "movements": expense.movements |> List.map(m => m |> Movement.toJs),
 };
 
 let toJsWithRev = (rev: string, expense: t) => {
@@ -119,4 +129,5 @@ let toJsWithRev = (rev: string, expense: t) => {
   "subTotals": expense.subTotals |> List.map(s => s |> SubTotal.toJs),
   "tax": expense.tax,
   "total": expense.total,
+  "movements": expense.movements |> List.map(m => m |> Movement.toJs),
 };
