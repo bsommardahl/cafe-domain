@@ -10,6 +10,7 @@ module SubTotal = {
 type t = {
   id: string,
   description: string,
+  document: string,
   vendor: Vendor.t,
   expenseType: ExpenseType.t,
   date: float,
@@ -21,6 +22,7 @@ type t = {
 
 type denormalized = {
   description: string,
+  document: string,
   vendor: Vendor.t,
   expenseType: ExpenseType.t,
   date: float,
@@ -37,6 +39,7 @@ let denormalize = (expenses: list(t)) : list(denormalized) =>
        |> List.map((s: SubTotal.t) =>
             {
               description: e.description,
+              document: e.document,
               vendor: e.vendor,
               expenseType: e.expenseType,
               date: e.date,
@@ -55,6 +58,7 @@ let sum = (whatToSum: denormalized => int, l: list(denormalized)) =>
 module New = {
   type t = {
     description: string,
+    document: string,
     vendor: Vendor.t,
     expenseType: ExpenseType.t,
     date: float,
@@ -65,6 +69,7 @@ module New = {
   };
   let mapToJs = (expense: t) => {
     "description": expense.description,
+    "document": expense.document,
     "vendor": expense.vendor |> Vendor.toJs,
     "expenseType": expense.expenseType |> ExpenseType.toJs,
     "date": expense.date,
@@ -78,6 +83,7 @@ module New = {
 type jsT = {
   .
   "description": string,
+  "document": string,
   "vendor": Vendor.jsT,
   "expenseType": ExpenseType.jsT,
   "date": float,
@@ -90,6 +96,7 @@ type jsT = {
 let fromJs = expenseJs : t => {
   id: expenseJs##_id,
   description: expenseJs##description,
+  document: expenseJs##document,
   vendor: expenseJs##vendor |> Vendor.fromJs,
   expenseType: expenseJs##expenseType |> ExpenseType.fromJs,
   date: expenseJs##date,
@@ -110,6 +117,7 @@ let fromJs = expenseJs : t => {
 let toJs = (expense: t) => {
   "_id": expense.id,
   "description": expense.description,
+  "document": expense.document,
   "vendor": expense.vendor |> Vendor.toJs,
   "expenseType": expense.expenseType |> ExpenseType.toJs,
   "date": expense.date,
@@ -123,6 +131,7 @@ let toJsWithRev = (rev: string, expense: t) => {
   "_id": expense.id,
   "_rev": rev,
   "description": expense.description,
+  "document": expense.document,
   "vendor": expense.vendor |> Vendor.toJs,
   "expenseType": expense.expenseType |> ExpenseType.toJs,
   "date": expense.date,
