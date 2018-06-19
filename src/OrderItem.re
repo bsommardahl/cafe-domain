@@ -1,4 +1,6 @@
 type t = {
+  id: int,
+  quantity: int,
   sku: string,
   name: string,
   suggestedPrice: Money.t,
@@ -8,6 +10,8 @@ type t = {
 };
 
 let mapOrderItemFromJs = itemJs : t => {
+  id: itemJs##id,
+  quantity: itemJs##quantity,
   sku: itemJs##sku,
   name: itemJs##name,
   suggestedPrice: itemJs##suggestedPrice,
@@ -17,6 +21,8 @@ let mapOrderItemFromJs = itemJs : t => {
 };
 
 let orderItemToJs = (orderItem: t) => {
+  "id": orderItem.id,
+  "quantity": orderItem.quantity,
   "sku": orderItem.sku,
   "name": orderItem.name,
   "suggestedPrice": orderItem.suggestedPrice,
