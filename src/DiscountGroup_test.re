@@ -3,7 +3,7 @@ open Jest;
 open Expect;
 
 let buildOrderItem = (name: string, suggestedPrice: int) : OrderItem.t => {
-  id: 0,
+  id: "",
   quantity: 0,
   sku: "test",
   name,

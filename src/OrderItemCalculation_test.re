@@ -5,7 +5,7 @@ open Expect;
 open OrderItemCalculation;
 
 let buildOrderItem = (price: int, taxMethod) : OrderItem.t => {
-  id: 0,
+  id: "",
   quantity: 0,
   sku: "t",
   name: "t",
@@ -20,7 +20,7 @@ describe("order item calculation", () => {
     describe("with several items", () => {
       let orderItems: list(OrderItem.t) = [
         {
-          id: 123,
+          id: "",
           quantity: 1,
           sku: "PizzaPep",
           name: "Pizza Peperoni",
@@ -30,7 +30,7 @@ describe("order item calculation", () => {
           salePrice: 20000,
         },
         {
-          id: 456,
+          id: "",
           quantity: 1,
           sku: "PizzaCheese",
           name: "Pizza Queso",
@@ -40,7 +40,7 @@ describe("order item calculation", () => {
           salePrice: 20000,
         },
         {
-          id: 789,
+          id: "",
           quantity: 1,
           sku: "PizzaAloha",
           name: "Pizza Aloja",
@@ -60,7 +60,7 @@ describe("order item calculation", () => {
     describe("with several items and a discount", () => {
       let orderItems: list(OrderItem.t) = [
         {
-          id: 123,
+          id: "",
           quantity: 1,
           sku: "PizzaPep",
           name: "Pizza Peperoni",
@@ -70,7 +70,7 @@ describe("order item calculation", () => {
           salePrice: 20000,
         },
         {
-          id: 456,
+          id: "",
           quantity: 1,
           sku: "PizzaCheese",
           name: "Pizza Queso",
@@ -80,7 +80,7 @@ describe("order item calculation", () => {
           salePrice: 20000,
         },
         {
-          id: 789,
+          id: "",
           quantity: 1,
           sku: "PizzaAloha",
           name: "Pizza Aloja",
@@ -114,7 +114,7 @@ describe("order item calculation", () => {
     describe("with one pizza and a discount", () => {
       let orderItems: list(OrderItem.t) = [
         {
-          id: 456,
+          id: "",
           quantity: 1,
           sku: "PizzaCheese",
           name: "Pizza Queso",
@@ -201,7 +201,7 @@ describe("order item calculation", () => {
     describe("when exempt tax calculation", () => {
       describe("and with a discount", () => {
         let orderItem: OrderItem.t = {
-          id: 365,
+          id: "",
           quantity: 1,
           sku: "some",
           name: "some",
@@ -232,7 +232,7 @@ describe("order item calculation", () => {
       });
       describe("and with no discounts", () => {
         let orderItem: OrderItem.t = {
-          id: 365,
+          id: "",
           quantity: 1,
           sku: "some",
           name: "some",
@@ -261,7 +261,7 @@ describe("order item calculation", () => {
     describe("with total first tax calculation", () => {
       describe("and no discount", () => {
         let orderItem: OrderItem.t = {
-          id: 365,
+          id: "",
           quantity: 1,
           sku: "some",
           name: "some",
@@ -288,7 +288,7 @@ describe("order item calculation", () => {
       });
       describe("and with a low discount", () => {
         let orderItem: OrderItem.t = {
-          id: 365,
+          id: "",
           quantity: 1,
           sku: "some",
           name: "some",
@@ -321,7 +321,7 @@ describe("order item calculation", () => {
       });
       describe("and with a 100% discount", () => {
         let orderItem: OrderItem.t = {
-          id: 365,
+          id: "",
           quantity: 1,
           sku: "some",
           name: "free",
@@ -352,7 +352,7 @@ describe("order item calculation", () => {
     });
     describe("and with a 95% discount", () => {
       let orderItem: OrderItem.t = {
-        id: 365,
+        id: "",
         quantity: 1,
         sku: "some",
         name: "almost free",
@@ -384,7 +384,7 @@ describe("order item calculation", () => {
     });
     describe("when discounting back down to normal price", () => {
       let orderItem: OrderItem.t = {
-        id: 365,
+        id: "",
         quantity: 1,
         sku: "some",
         name: "local discount target",
@@ -406,7 +406,7 @@ describe("order item calculation", () => {
     describe("with subtotal first tax calculation", () => {
       describe("with no discount", () => {
         let orderItem: OrderItem.t = {
-          id: 365,
+          id: "",
           quantity: 1,
           sku: "some",
           name: "some",
@@ -434,7 +434,7 @@ describe("order item calculation", () => {
       });
       describe("with one discount", () => {
         let orderItem: OrderItem.t = {
-          id: 365,
+          id: "",
           quantity: 1,
           sku: "some",
           name: "some",

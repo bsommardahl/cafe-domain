@@ -1,5 +1,5 @@
 type t = {
-  id: int,
+  id: string,
   quantity: int,
   sku: string,
   name: string,
