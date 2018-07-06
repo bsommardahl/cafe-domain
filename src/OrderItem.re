@@ -11,7 +11,11 @@ type t = {
 
 let mapOrderItemFromJs = itemJs : t => {
   id: itemJs##id,
-  quantity: itemJs##quantity,
+  quantity:
+    switch (Js.Null_undefined.toOption(itemJs##quantity)) {
+    | Some(quantity) => quantity
+    | None => 1
+    },
   sku: itemJs##sku,
   name: itemJs##name,
   suggestedPrice: itemJs##suggestedPrice,
