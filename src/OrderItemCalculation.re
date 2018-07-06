@@ -33,7 +33,7 @@ let totalFirstCalculator: totalCalculator =
     let discounts = calcDiscountTotal(item, discountsList);
     let total = float_of_int(item.suggestedPrice) /. 100. -. discounts;
     let taxRate = (100. +. float_of_int(taxPercent)) /. 100.;
-    let subTotal = total /. taxRate;
+    let subTotal = total *. (item.quantity |> float_of_int) /. taxRate;
     let tax = total -. subTotal;
     {subTotal, discounts, tax, total};
   };
