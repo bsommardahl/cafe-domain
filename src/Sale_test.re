@@ -6,7 +6,7 @@ let buildOrderItem =
     (name: string, salePrice: int, taxRate: int)
     : OrderItem.t => {
   id: "",
-  quantity: 0,
+  quantity: 1,
   sku: name,
   name,
   suggestedPrice: 0,
@@ -44,6 +44,7 @@ let buildSale = (name, salePrice, taxRate: int) : Sale.t => {
   taxRate,
   salePrice,
   suggestedPrice: 0,
+  quantity: 1,
   discounts: [],
 };
 

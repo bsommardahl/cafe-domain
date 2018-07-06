@@ -2,20 +2,21 @@ open Jest;
 
 open Expect;
 
-let buildSale = (sku, price, taxRate) : Sale.t => {
+let buildSale = (sku, price, taxRate, quantity) : Sale.t => {
   sku,
   productName: "test",
   taxRate,
   salePrice: price,
   suggestedPrice: 0,
+  quantity,
   discounts: [],
 };
 
 describe("The product group module", () =>
   describe("when converting a list of sales to a grouped list products", () => {
     describe("where items are normal sales", () => {
-      let bread = buildSale("bread", 100, 15);
-      let cheese = buildSale("cheese", 100, 15);
+      let bread = buildSale("bread", 100, 15, 2);
+      let cheese = buildSale("cheese", 100, 15, 1);
       let sales = [bread, bread, bread, cheese, cheese];
       let groupedSales = ProductGroup.fromSalesList(sales);
       test("it should calculate the subtotal of all items", () =>
@@ -27,10 +28,10 @@ describe("The product group module", () =>
                  productName: bread.productName,
                  taxRate: bread.taxRate,
                  salePrice: bread.salePrice,
-                 quantity: 3,
-                 subTotal: 300,
-                 tax: 45,
-                 total: 345,
+                 quantity: 6,
+                 subTotal: 600,
+                 tax: 90,
+                 total: 690,
                },
                {
                  sku: cheese.sku,
@@ -47,10 +48,10 @@ describe("The product group module", () =>
       );
     });
     describe("where items have changed price or taxRate", () => {
-      let bread1 = buildSale("bread", 1000, 15);
-      let bread2 = buildSale("bread", 1000, 10);
-      let cheese1 = buildSale("cheese", 500, 15);
-      let cheese2 = buildSale("cheese", 1000, 15);
+      let bread1 = buildSale("bread", 1000, 15, 1);
+      let bread2 = buildSale("bread", 1000, 10, 1);
+      let cheese1 = buildSale("cheese", 500, 15, 1);
+      let cheese2 = buildSale("cheese", 1000, 15, 1);
       let sales = [
         bread1,
         bread1,

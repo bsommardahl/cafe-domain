@@ -7,6 +7,7 @@ let buildSale = (name, taxRate) : Sale.t => {
   productName: name,
   salePrice: 1234,
   taxRate,
+  quantity: 1,
   suggestedPrice: 0,
   discounts: [],
 };

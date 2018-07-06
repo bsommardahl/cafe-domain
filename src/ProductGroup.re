@@ -16,14 +16,20 @@ let fromSalesList = (sales: list(Sale.t)) : list(t) =>
      )
   |> List.map((x: Group.group(Sale.t)) => {
        let sub =
-         x.value |. Belt.List.reduce(0, (acc, cur) => acc + cur.salePrice);
+         x.value
+         |. Belt.List.reduce(0, (acc, cur) =>
+              acc + cur.salePrice * cur.quantity
+            );
        let tax =
          x.value
          |. Belt.List.reduce(0, (acc, cur) =>
-              acc + (cur.salePrice |> Percent.calculate(cur.taxRate))
+              acc
+              + (cur.salePrice |> Percent.calculate(cur.taxRate))
+              * cur.quantity
             );
        let total = sub + tax;
-       let firstSale = (x.value |> Array.of_list)[0];
+       let sales = x.value;
+       let firstSale = (sales |> Array.of_list)[0];
        {
          sku: firstSale.sku,
          productName: firstSale.productName,
@@ -32,7 +38,11 @@ let fromSalesList = (sales: list(Sale.t)) : list(t) =>
          subTotal: sub,
          tax,
          total,
-         quantity: x.value |> List.length,
+         quantity:
+           sales
+           |. Belt.List.reduce(0, (quantity, sale) =>
+                quantity + sale.quantity
+              ),
        };
      });
 

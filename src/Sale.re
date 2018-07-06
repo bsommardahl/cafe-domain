@@ -5,6 +5,7 @@ type t = {
   taxRate: Percent.t,
   suggestedPrice: Money.t,
   discounts: list(Discount.t),
+  quantity: int,
 };
 
 let listOfSales = (order: Order.t) : list(t) =>
@@ -17,5 +18,6 @@ let listOfSales = (order: Order.t) : list(t) =>
          salePrice: o.salePrice,
          suggestedPrice: o.suggestedPrice,
          discounts: order.discounts,
+         quantity: o.quantity,
        }
      );
