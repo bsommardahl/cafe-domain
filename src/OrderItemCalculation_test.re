@@ -262,10 +262,10 @@ describe("order item calculation", () => {
       describe("and no discount", () => {
         let orderItem: OrderItem.t = {
           id: "",
-          quantity: 1,
+          quantity: 6,
           sku: "some",
           name: "some",
-          suggestedPrice: 100,
+          suggestedPrice: 600,
           addedOn: 0.0,
           salePrice: 100,
           taxCalculation: Tax.TotalFirst(15),
