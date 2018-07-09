@@ -292,7 +292,7 @@ describe("order item calculation", () => {
           quantity: 4,
           sku: "some",
           name: "some",
-          suggestedPrice: 400,
+          suggestedPrice: 100,
           addedOn: 0.0,
           salePrice: 100,
           taxCalculation: Tax.TotalFirst(15),
@@ -303,11 +303,11 @@ describe("order item calculation", () => {
         );
         /**/
         test("the tax should be inverted from total", () =>
-          expect(totals.tax) |> toEqual(0.13043478260869557)
+          expect(totals.tax) |> toEqual(0.5217391304347823)
         );
         /**/
         test("the subtotal derived from the total minus the tax amount", () =>
-          expect(totals.subTotal) |> toEqual(0.8695652173913044)
+          expect(totals.subTotal) |> toEqual(3.4782608695652177)
         );
         test("it should not have a discount", () =>
           expect(totals.discounts) |> toEqual(0.)
@@ -316,10 +316,10 @@ describe("order item calculation", () => {
       describe("and with a low discount", () => {
         let orderItem: OrderItem.t = {
           id: "",
-          quantity: 2,
+          quantity: 1,
           sku: "some",
           name: "some",
-          suggestedPrice: 2200,
+          suggestedPrice: 1100,
           addedOn: 0.0,
           salePrice: 0,
           taxCalculation: Tax.TotalFirst(15),
@@ -331,19 +331,19 @@ describe("order item calculation", () => {
             orderItem,
           );
         test(
-          /**/ "the subtotal should be discounted and derrived from the total",
+          /**/ "the subtotal should be discounted and derived from the total",
           () =>
-          expect(totals.subTotal) |> toEqual(7.652173913043479)
+          expect(totals.subTotal) |> toEqual(8.608695652173914)
         );
         test("the total should be the discounted suggested price", () =>
-          expect(totals.total) |> toEqual(8.8)
+          expect(totals.total) |> toEqual(9.9)
         );
         test("it should have a discount", () =>
-          expect(totals.discounts) |> toEqual(2.2)
+          expect(totals.discounts) |> toEqual(1.1)
         );
         /**/
         test("it should return tax", () =>
-          expect(totals.tax) |> toEqual(1.1478260869565213)
+          expect(totals.tax) |> toEqual(1.2913043478260864)
         );
       });
       describe("and with a 100% discount", () => {
