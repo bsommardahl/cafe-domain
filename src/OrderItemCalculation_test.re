@@ -299,7 +299,7 @@ describe("order item calculation", () => {
         };
         let totals = totalFirstCalculator(15, [], orderItem);
         test("the total should be the suggested price", () =>
-          expect(totals.total) |> toEqual(1.)
+          expect(totals.total) |> toEqual(4.)
         );
         /**/
         test("the tax should be inverted from total", () =>
