@@ -7,7 +7,6 @@ open OrderItemCalculation;
 let buildOrderItem = (price: int, taxMethod) : OrderItem.t => {
   id: "",
   quantity: 0,
-  notes: [],
   sku: "t",
   name: "t",
   suggestedPrice: price,
@@ -23,7 +22,6 @@ describe("order item calculation", () => {
         {
           id: "",
           quantity: 1,
-          notes: [],
           sku: "PizzaPep",
           name: "Pizza Peperoni",
           suggestedPrice: 20000,
@@ -34,7 +32,6 @@ describe("order item calculation", () => {
         {
           id: "",
           quantity: 1,
-          notes: [],
           sku: "PizzaCheese",
           name: "Pizza Queso",
           suggestedPrice: 20000,
@@ -45,7 +42,6 @@ describe("order item calculation", () => {
         {
           id: "",
           quantity: 1,
-          notes: [],
           sku: "PizzaAloha",
           name: "Pizza Aloja",
           suggestedPrice: 20000,
@@ -66,7 +62,6 @@ describe("order item calculation", () => {
         {
           id: "",
           quantity: 1,
-          notes: [],
           sku: "PizzaPep",
           name: "Pizza Peperoni",
           suggestedPrice: 20000,
@@ -77,7 +72,6 @@ describe("order item calculation", () => {
         {
           id: "",
           quantity: 1,
-          notes: [],
           sku: "PizzaCheese",
           name: "Pizza Queso",
           suggestedPrice: 20000,
@@ -89,7 +83,6 @@ describe("order item calculation", () => {
           id: "",
           quantity: 1,
           sku: "PizzaAloha",
-          notes: [],
           name: "Pizza Aloja",
           suggestedPrice: 20000,
           taxCalculation: Exempt,
@@ -123,7 +116,6 @@ describe("order item calculation", () => {
         {
           id: "",
           quantity: 1,
-          notes: [],
           sku: "PizzaCheese",
           name: "Pizza Queso",
           suggestedPrice: 12500,
@@ -211,7 +203,6 @@ describe("order item calculation", () => {
         let orderItem: OrderItem.t = {
           id: "",
           quantity: 1,
-          notes: [],
           sku: "some",
           name: "some",
           suggestedPrice: 1000,
@@ -243,7 +234,6 @@ describe("order item calculation", () => {
         let orderItem: OrderItem.t = {
           id: "",
           quantity: 1,
-          notes: [],
           sku: "some",
           name: "some",
           suggestedPrice: 100,
@@ -273,7 +263,6 @@ describe("order item calculation", () => {
         let orderItem: OrderItem.t = {
           id: "",
           quantity: 1,
-          notes: [],
           sku: "some",
           name: "some",
           suggestedPrice: 100,
@@ -301,7 +290,6 @@ describe("order item calculation", () => {
         let orderItem: OrderItem.t = {
           id: "",
           quantity: 4,
-          notes: [],
           sku: "some",
           name: "some",
           suggestedPrice: 100,
@@ -329,7 +317,6 @@ describe("order item calculation", () => {
         let orderItem: OrderItem.t = {
           id: "",
           quantity: 1,
-          notes: [],
           sku: "some",
           name: "some",
           suggestedPrice: 1100,
@@ -363,7 +350,6 @@ describe("order item calculation", () => {
         let orderItem: OrderItem.t = {
           id: "",
           quantity: 1,
-          notes: [],
           sku: "some",
           name: "free",
           suggestedPrice: 1000,
@@ -395,7 +381,6 @@ describe("order item calculation", () => {
       let orderItem: OrderItem.t = {
         id: "",
         quantity: 1,
-        notes: [],
         sku: "some",
         name: "almost free",
         suggestedPrice: 10000,
@@ -429,7 +414,6 @@ describe("order item calculation", () => {
         id: "",
         quantity: 1,
         sku: "some",
-        notes: [],
         name: "local discount target",
         suggestedPrice: 130,
         addedOn: 0.0,
@@ -451,7 +435,6 @@ describe("order item calculation", () => {
         let orderItem: OrderItem.t = {
           id: "",
           quantity: 1,
-          notes: [],
           sku: "some",
           name: "some",
           suggestedPrice: 100,
@@ -480,7 +463,6 @@ describe("order item calculation", () => {
         let orderItem: OrderItem.t = {
           id: "",
           quantity: 1,
-          notes: [],
           sku: "some",
           name: "some",
           suggestedPrice: 1036,

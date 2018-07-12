@@ -5,7 +5,6 @@ open Expect;
 let buildOrderItem = (name: string, suggestedPrice: int) : OrderItem.t => {
   id: "",
   quantity: 0,
-  notes: [],
   sku: "test",
   name,
   suggestedPrice,

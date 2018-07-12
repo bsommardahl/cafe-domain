@@ -8,7 +8,6 @@ let buildSale = (name, taxRate) : Sale.t => {
   salePrice: 1234,
   taxRate,
   quantity: 1,
-  notes: [],
   suggestedPrice: 0,
   discounts: [],
 };

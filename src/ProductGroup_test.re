@@ -9,7 +9,6 @@ let buildSale = (sku, price, taxRate, quantity) : Sale.t => {
   salePrice: price,
   suggestedPrice: 0,
   quantity,
-  notes: [],
   discounts: [],
 };
 
