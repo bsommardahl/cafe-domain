@@ -7,6 +7,7 @@ let buildOrderItem =
     : OrderItem.t => {
   id: "",
   quantity: 1,
+  notes: [],
   sku: name,
   name,
   suggestedPrice: 0,
@@ -45,6 +46,7 @@ let buildSale = (name, salePrice, taxRate: int) : Sale.t => {
   salePrice,
   suggestedPrice: 0,
   quantity: 1,
+  notes: [],
   discounts: [],
 };
 

@@ -1,6 +1,7 @@
 type t = {
   id: string,
   quantity: int,
+  notes: list(OrderItemNote.t),
   sku: string,
   name: string,
   suggestedPrice: Money.t,
@@ -16,6 +17,14 @@ let mapOrderItemFromJs = itemJs : t => {
     | Some(quantity) => quantity
     | None => 1
     },
+  notes:
+    switch (Js.Null_undefined.toOption(itemJs##notes)) {
+    | Some(orderItemNotes) =>
+      orderItemNotes
+      |> Array.map(i => OrderItemNote.mapOrderItemNoteFromJs(i))
+      |> Array.to_list
+    | None => []
+    },
   sku: itemJs##sku,
   name: itemJs##name,
   suggestedPrice: itemJs##suggestedPrice,
@@ -27,6 +36,7 @@ let mapOrderItemFromJs = itemJs : t => {
 let orderItemToJs = (orderItem: t) => {
   "id": orderItem.id,
   "quantity": orderItem.quantity,
+  "notes": orderItem.notes,
   "sku": orderItem.sku,
   "name": orderItem.name,
   "suggestedPrice": orderItem.suggestedPrice,
