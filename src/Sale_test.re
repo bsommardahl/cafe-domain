@@ -7,6 +7,7 @@ let buildOrderItem =
     : OrderItem.t => {
   id: "",
   quantity: 1,
+  notes: [],
   sku: name,
   name,
   suggestedPrice: 0,
