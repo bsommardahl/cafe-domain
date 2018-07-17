@@ -1,5 +1,5 @@
 type t = {
-  id: int,
+  id: string,
   value: string,
 };
 
