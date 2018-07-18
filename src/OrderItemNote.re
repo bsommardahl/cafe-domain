@@ -3,10 +3,11 @@ type t = {
   value: string,
 };
 
-let mapOrderItemNoteFromJs = noteJs : t => {
-  id: noteJs##id,
-  value: noteJs##value,
-};
+let mapOrderItemNoteFromJs = noteJs : t =>
+  switch (Js.Null_undefined.toOption(noteJs)) {
+  | Some(noteJs) => {id: noteJs##id, value: noteJs##value}
+  | None => {id: "", value: ""}
+  };
 
 let orderItemNoteToJs = (orderItemNote: t) => {
   "id": orderItemNote.id,
