@@ -36,7 +36,10 @@ let mapOrderItemFromJs = itemJs : t => {
 let orderItemToJs = (orderItem: t) => {
   "id": orderItem.id,
   "quantity": orderItem.quantity,
-  "notes": orderItem.notes,
+  "notes":
+    orderItem.notes
+    |> List.map(n => n |> OrderItemNote.orderItemNoteToJs)
+    |> Array.of_list,
   "sku": orderItem.sku,
   "name": orderItem.name,
   "suggestedPrice": orderItem.suggestedPrice,
