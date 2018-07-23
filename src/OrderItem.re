@@ -10,6 +10,18 @@ type t = {
   taxCalculation: Tax.taxCalculationMethod,
 };
 
+let assignNotes = (orderItem: t, orderItemNotes: list(OrderItemNote.t)) => {
+  ...orderItem,
+  notes:
+    orderItem.notes
+    @ (
+      orderItemNotes
+      |> List.filter((note: OrderItemNote.t) =>
+           note.id !== "" && note.value !== ""
+         )
+    ),
+};
+
 let mapOrderItemFromJs = itemJs : t => {
   id: itemJs##id,
   quantity:
