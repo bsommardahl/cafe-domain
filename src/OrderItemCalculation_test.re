@@ -56,9 +56,8 @@ describe("order item calculation", () => {
       ];
       test("the tax and the subtotal should equal the total", () => {
         let totals = orderItems |> OrderItemCalculation.getTotals([]);
-        expect(totals.subTotal) |> toEqual(52173) |> ignore;
-        expect(totals.tax) |> toEqual(7827) |> ignore;
-        expect(totals.subTotal + totals.tax) |> toEqual(totals.total);
+        expect(totals)
+        |> toEqual({subTotal: 52174, tax: 7826, total: 60000, discounts: 0});
       });
     });
     describe("with several items and a discount", () => {
