@@ -5,7 +5,7 @@ open Expect;
 let unixTime = 1522292400000.;
 
 let formatted = "28-3-2018 9:00 PM";
-
+let formattedEn = "3-28-2018 9:00 PM";
 describe("Date functions", () => {
   describe(
     "when converting from date float to sortable date/time (timestamp)", () =>
@@ -73,6 +73,13 @@ describe("Date functions", () => {
     describe("a float to a formatted date/time", () =>
       test("it should format the float to a human readable format", () =>
         expect(unixTime |> Date.toDisplay) |> toEqual(formatted)
+      )
+    );
+    describe("a float to a formatted date/time", () =>
+      test(
+        "it should format the float to a human readable format in English format",
+        () =>
+        expect(unixTime |> Date.toDisplayEN) |> toEqual(formattedEn)
       )
     );
     describe("a formatted date/time to a float", () =>

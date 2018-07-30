@@ -18,6 +18,20 @@ let toDisplayDate = t =>
       ++ (year |> int_of_float |> string_of_int);
     }
   );
+let toDisplayDateEN = t =>
+  Js.Date.fromFloat(t)
+  |> (
+    d => {
+      let month = (d |> Js.Date.getMonth) +. 1.;
+      let day = d |> Js.Date.getDate;
+      let year = d |> Js.Date.getFullYear;
+      (month |> int_of_float |> string_of_int)
+      ++ "-"
+      ++ (day |> int_of_float |> string_of_int)
+      ++ "-"
+      ++ (year |> int_of_float |> string_of_int);
+    }
+  );
 
 let toStringWith2Digits = s =>
   if (s === 0) {
@@ -87,7 +101,7 @@ let toDisplayTime = t =>
 let toShortTime = toDisplayTime;
 
 let toDisplay = t => (t |> toDisplayDate) ++ " " ++ (t |> toDisplayTime);
-
+let toDisplayEN = t => (t |> toDisplayDateEN) ++ " " ++ (t |> toDisplayTime);
 let fromDisplay = f => {
   let p = f |> Js.String.split(" ");
   let d_es = p[0];
