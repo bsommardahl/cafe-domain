@@ -60,7 +60,7 @@ let toISODate = t =>
 let fromISODate = iso : t => {
   let p = iso |> Js.String.split("-");
   let d = p[1] ++ "/" ++ p[2] ++ "/" ++ p[0];
-  let parsed = d |> Js.Date.parse;
+  let parsed = d |> Js.Date.fromString;
   parsed |> Js.Date.getTime;
 };
 
@@ -152,7 +152,7 @@ let endOfDay = (d: t) : t => {
 };
 
 let isValid = (formattedDate: string) : bool => {
-  let valid = formattedDate |> Js.Date.parse;
+  let valid = formattedDate |> Js.Date.fromString;
   switch (valid |> Js.Date.toString) {
   | "Invalid Date" => false
   | _ => true

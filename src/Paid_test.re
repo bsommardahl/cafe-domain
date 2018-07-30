@@ -2,8 +2,6 @@ open Jest;
 
 open Expect;
 
-open OrderItemCalculation;
-
 describe("Paid module", () =>
   describe("when mapping from js", () => {
     describe("with a card method", () => {
