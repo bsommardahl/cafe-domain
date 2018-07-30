@@ -4,11 +4,14 @@
   "bsc-flags": ["-bs-super-errors"],
   "sources": [
     {
-      "dir": "src",
-      "subdirs": true
+      "dir": "src"
+    },
+    {
+      "dir": "__tests__",
+      "type": "dev"
     }
   ],
   "allowed-build-kinds": "js",
-  "bs-dependencies": ["@glennsl/bs-jest"],
+  "bs-dev-dependencies": ["@glennsl/bs-jest"],
   "refmt": 3
 }
