@@ -1,3 +1,4 @@
+[@bs.deriving jsConverter]
 type t = {
   id: string,
   name: string,
