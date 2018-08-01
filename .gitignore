@@ -4,3 +4,5 @@
 npm-debug.log
 /lib
 /node_modules/
+/src/**/*.bs.js
+/__tests__/**/*.bs.js

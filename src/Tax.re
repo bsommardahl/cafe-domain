@@ -9,6 +9,9 @@ let toTaxRate = (method: taxCalculationMethod) =>
   | SubTotalFirst(rate) => rate
   | Exempt => 0
   };
+let createExempt = () => Exempt;
+let createTotalFirst = rate => TotalFirst(rate);
+let createSubTotalFirst = rate => SubTotalFirst(rate);
 
 module Calculation = {
   let toDelimitedString = (meth: taxCalculationMethod) =>
