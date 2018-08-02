@@ -6,6 +6,7 @@ type t = {
 };
 
 module NewDiscount = {
+  [@bs.deriving jsConverter]
   type t = {
     name: string,
     percent: int,
