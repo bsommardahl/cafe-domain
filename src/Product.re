@@ -2,7 +2,7 @@ type child = {
   quantity: int,
   productId: string,
 };
-
+[@bs.deriving jsConverter]
 type t = {
   id: string,
   sku: string,
