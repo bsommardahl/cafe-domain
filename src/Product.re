@@ -29,6 +29,7 @@ let fromOptionalDate = d =>
 let toOptionalDate = d => Js.Nullable.toOption(d);
 
 module NewProduct = {
+  [@bs.deriving jsConverter]
   type t = {
     sku: string,
     name: string,
