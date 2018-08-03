@@ -1,3 +1,4 @@
+[@bs.deriving jsConverter]
 type child = {
   quantity: int,
   productId: string,
@@ -18,16 +19,6 @@ type t = {
   unit: string,
   taxCalculation: Tax.taxCalculationMethod,
   products: list(child),
-};
-
-let childFromJs = js : child => {
-  productId: js##productId,
-  quantity: js##quantity,
-};
-
-let childToJs = (child: child) => {
-  "productId": child.productId,
-  "quantity": child.quantity,
 };
 
 let fromOptionalDate = d =>
