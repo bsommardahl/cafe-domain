@@ -1,9 +1,11 @@
+[@bs.deriving jsConverter]
 type t = {
   id: string,
   name: string,
 };
 
 module New = {
+  [@bs.deriving jsConverter]
   type t = {name: string};
   let toJs = (expenseType: t) => {"name": expenseType.name};
 };
