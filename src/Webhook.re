@@ -5,6 +5,7 @@ module EventType = {
     | OrderReturned
     | ReprintReceipt
     | PrintOrder
+    | AfterProductCreated
     | Error
     | Unrecognized;
   let toString = e =>
@@ -14,6 +15,7 @@ module EventType = {
     | OrderReturned => "OrderReturned"
     | ReprintReceipt => "ReprintReceipt"
     | PrintOrder => "PrintOrder"
+    | AfterProductCreated => "AfterProductCreated"
     | Error => "Error"
     | Unrecognized => "Unrecognized"
     };
@@ -24,6 +26,7 @@ module EventType = {
     | "OrderReturned" => OrderReturned
     | "ReprintReceipt" => ReprintReceipt
     | "PrintOrder" => PrintOrder
+    | "AfterProductCreated" => AfterProductCreated
     | "Error" => Error
     | _ => Unrecognized
     };
@@ -32,15 +35,18 @@ module EventType = {
 module EventSource = {
   type t =
     | Order
+    | Product
     | Unrecognized;
   let toString = s =>
     switch (s) {
     | Order => "Order"
+    | Product => "Product"
     | Unrecognized => "Unrecognized"
     };
   let toT = (s: string) =>
     switch (s) {
     | "Order" => Order
+    | "Product" => Product
     | _ => Unrecognized
     };
 };
@@ -97,7 +103,7 @@ type jsT = {
   "behavior": string,
 };
 
-let fromJs = webhookJs : t => {
+let fromJs = webhookJs: t => {
   id: webhookJs##_id,
   name: webhookJs##name,
   url: webhookJs##url,
@@ -116,7 +122,7 @@ let toJsWithRev = (id: string, rev: option(string), webhook: t) => {
   "behavior": webhook.behavior |> Behavior.toString,
 };
 
-let toJs = (webhook: t) : jsT => {
+let toJs = (webhook: t): jsT => {
   "_id": webhook.id,
   "name": webhook.name,
   "url": webhook.url,
