@@ -17,7 +17,6 @@ let buildProduct =
   unit: "pieces",
   location: "",
   weight: 0,
-  onHand: 0,
   startDate,
   endDate,
   tags,

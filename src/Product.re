@@ -15,7 +15,6 @@ type t = {
   startDate: option(Date.t),
   endDate: option(Date.t),
   suggestedPrice: int,
-  onHand: int,
   unit: string,
   taxCalculation: Tax.taxCalculationMethod,
   products: list(child),
@@ -75,7 +74,6 @@ let mapFromJs = prodJs: t => {
       products |> Array.to_list |> List.map(x => x |> childFromJs)
     | None => []
     },
-  onHand: prodJs##onHand,
   department: prodJs##department,
   weight: prodJs##weight,
   location: prodJs##location,
@@ -93,7 +91,6 @@ let mapToJsWithRev = (id: string, rev: option(string), prod: t) => {
   "suggestedPrice": prod.suggestedPrice,
   "tags": prod.tags,
   "products": prod.products |> List.map(x => x |> childToJs) |> Array.of_list,
-  "onHand": prod.onHand,
   "startDate": prod.startDate |> fromOptionalDate,
   "endDate": fromOptionalDate(prod.endDate),
   "department": prod.department,
