@@ -63,7 +63,7 @@ module NewProduct = {
   };
 };
 
-let mapFromJs = prodJs : t => {
+let mapFromJs = prodJs: t => {
   id: prodJs##_id,
   sku: prodJs##sku,
   name: prodJs##name,
@@ -105,7 +105,7 @@ let mapToJsWithRev = (id: string, rev: option(string), prod: t) => {
 
 let mapToJs = (prod: t) => prod |> mapToJsWithRev(prod.id, None);
 
-let getTags = (products: list(t)) : list(string) => {
+let getTags = (products: list(t)): list(string) => {
   let tagArrArr = products |> List.map(p => p.tags);
   let allTags = tagArrArr |> List.flatten;
   let uniqueTags =
@@ -113,5 +113,9 @@ let getTags = (products: list(t)) : list(string) => {
   uniqueTags;
 };
 
-let filterProducts = (tag: string, products: list(t)) : list(t) =>
+let filterProducts = (tag: string, products: list(t)): list(t) =>
   products |> List.filter(p => p.tags |> List.exists(t => t === tag));
+
+let getUnits = (product: t) =>
+  product.products
+  |> List.fold_left((total, child) => total + child.quantity, 0);
