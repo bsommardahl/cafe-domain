@@ -80,7 +80,7 @@ module PayloadType = {
 
   let fromString = p =>
     switch (p) {
-    | "application/text" => Text
+    | "text/plain" => Text
     | "application/json"
     | _ => Json
     };
