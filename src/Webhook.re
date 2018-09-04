@@ -67,6 +67,25 @@ module Behavior = {
     };
 };
 
+module PayloadType = {
+  type t =
+    | Json
+    | Text;
+
+  let toString = p =>
+    switch (p) {
+    | Json => "application/json"
+    | Text => "text/plain"
+    };
+
+  let fromString = p =>
+    switch (p) {
+    | "application/text" => Text
+    | "application/json"
+    | _ => Json
+    };
+};
+
 type t = {
   id: string,
   name: string,
@@ -74,6 +93,7 @@ type t = {
   url: string,
   event: EventType.t,
   behavior: Behavior.t,
+  payload: PayloadType.t,
 };
 
 module New = {
@@ -83,6 +103,7 @@ module New = {
     event: EventType.t,
     source: EventSource.t,
     behavior: Behavior.t,
+    payload: PayloadType.t,
   };
   let toJs = (webhook: t) => {
     "name": webhook.name,
@@ -90,6 +111,7 @@ module New = {
     "event": webhook.event |> EventType.toString,
     "source": webhook.source |> EventSource.toString,
     "behavior": webhook.behavior |> Behavior.toString,
+    "payload": webhook.payload |> PayloadType.toString,
   };
 };
 
@@ -101,6 +123,7 @@ type jsT = {
   "event": string,
   "source": string,
   "behavior": string,
+  "payload": string,
 };
 
 let fromJs = webhookJs: t => {
@@ -110,6 +133,7 @@ let fromJs = webhookJs: t => {
   event: webhookJs##event |> EventType.toT,
   source: webhookJs##source |> EventSource.toT,
   behavior: webhookJs##behavior |> Behavior.fromString,
+  payload: webhookJs##payload |> PayloadType.fromString,
 };
 
 let toJsWithRev = (id: string, rev: option(string), webhook: t) => {
@@ -120,6 +144,7 @@ let toJsWithRev = (id: string, rev: option(string), webhook: t) => {
   "event": webhook.event |> EventType.toString,
   "source": webhook.source |> EventSource.toString,
   "behavior": webhook.behavior |> Behavior.toString,
+  "payload": webhook.payload |> PayloadType.toString,
 };
 
 let toJs = (webhook: t): jsT => {
@@ -129,4 +154,5 @@ let toJs = (webhook: t): jsT => {
   "event": webhook.event |> EventType.toString,
   "source": webhook.source |> EventSource.toString,
   "behavior": webhook.behavior |> Behavior.toString,
+  "payload": webhook.payload |> PayloadType.toString,
 };
