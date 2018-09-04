@@ -15,7 +15,6 @@ type t = {
   startDate: option(Date.t),
   endDate: option(Date.t),
   suggestedPrice: int,
-  onHand: int,
   unit: string,
   taxCalculation: Tax.taxCalculationMethod,
   products: list(child),
@@ -63,7 +62,7 @@ module NewProduct = {
   };
 };
 
-let mapFromJs = prodJs : t => {
+let mapFromJs = prodJs: t => {
   id: prodJs##_id,
   sku: prodJs##sku,
   name: prodJs##name,
@@ -75,7 +74,6 @@ let mapFromJs = prodJs : t => {
       products |> Array.to_list |> List.map(x => x |> childFromJs)
     | None => []
     },
-  onHand: prodJs##onHand,
   department: prodJs##department,
   weight: prodJs##weight,
   location: prodJs##location,
@@ -93,7 +91,6 @@ let mapToJsWithRev = (id: string, rev: option(string), prod: t) => {
   "suggestedPrice": prod.suggestedPrice,
   "tags": prod.tags,
   "products": prod.products |> List.map(x => x |> childToJs) |> Array.of_list,
-  "onHand": prod.onHand,
   "startDate": prod.startDate |> fromOptionalDate,
   "endDate": fromOptionalDate(prod.endDate),
   "department": prod.department,
@@ -105,7 +102,7 @@ let mapToJsWithRev = (id: string, rev: option(string), prod: t) => {
 
 let mapToJs = (prod: t) => prod |> mapToJsWithRev(prod.id, None);
 
-let getTags = (products: list(t)) : list(string) => {
+let getTags = (products: list(t)): list(string) => {
   let tagArrArr = products |> List.map(p => p.tags);
   let allTags = tagArrArr |> List.flatten;
   let uniqueTags =
@@ -113,5 +110,9 @@ let getTags = (products: list(t)) : list(string) => {
   uniqueTags;
 };
 
-let filterProducts = (tag: string, products: list(t)) : list(t) =>
+let filterProducts = (tag: string, products: list(t)): list(t) =>
   products |> List.filter(p => p.tags |> List.exists(t => t === tag));
+
+let getUnits = (product: t) =>
+  product.products
+  |> List.fold_left((total, child) => total + child.quantity, 0);
