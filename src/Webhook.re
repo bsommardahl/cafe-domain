@@ -5,6 +5,7 @@ module EventType = {
     | OrderReturned
     | ReprintReceipt
     | PrintOrder
+    | PrintProduct
     | AfterProductCreated
     | Error
     | Unrecognized;
@@ -15,6 +16,7 @@ module EventType = {
     | OrderReturned => "OrderReturned"
     | ReprintReceipt => "ReprintReceipt"
     | PrintOrder => "PrintOrder"
+    | PrintProduct => "PrintProduct"
     | AfterProductCreated => "AfterProductCreated"
     | Error => "Error"
     | Unrecognized => "Unrecognized"
@@ -26,6 +28,7 @@ module EventType = {
     | "OrderReturned" => OrderReturned
     | "ReprintReceipt" => ReprintReceipt
     | "PrintOrder" => PrintOrder
+    | "PrintProduct" => PrintProduct
     | "AfterProductCreated" => AfterProductCreated
     | "Error" => Error
     | _ => Unrecognized
