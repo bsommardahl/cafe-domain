@@ -3,7 +3,7 @@ module SubTotal = {
     amount: Money.t,
     taxRate: Percent.t,
   };
-  let fromJs = js : t => {amount: js##amount, taxRate: js##taxRate};
+  let fromJs = js: t => {amount: js##amount, taxRate: js##taxRate};
   let toJs = (item: t) => {"amount": item.amount, "taxRate": item.taxRate};
 };
 
@@ -18,6 +18,7 @@ type t = {
   tax: Money.t,
   total: Money.t,
   movements: list(Movement.t),
+  createdBy: string,
 };
 
 type denormalized = {
@@ -30,30 +31,34 @@ type denormalized = {
   taxRate: Percent.t,
   tax: Money.t,
   total: Money.t,
+  createdBy: string,
 };
 
-let denormalize = (expenses: list(t)) : list(denormalized) =>
-  expenses
-  |> List.map((e: t) =>
-       e.subTotals
-       |> List.map((s: SubTotal.t) =>
-            {
-              description: e.description,
-              document: e.document,
-              vendor: e.vendor,
-              expenseType: e.expenseType,
-              date: e.date,
-              subTotal: s.amount,
-              taxRate: s.taxRate,
-              tax: s.amount |> Percent.calculate(s.taxRate),
-              total: (s.amount |> Percent.calculate(s.taxRate)) + s.amount,
-            }
-          )
-     )
-  |. List.concat;
+let denormalize = (expenses: list(t)): list(denormalized) =>
+  (
+    expenses
+    |> List.map((e: t) =>
+         e.subTotals
+         |> List.map((s: SubTotal.t) =>
+              {
+                description: e.description,
+                document: e.document,
+                vendor: e.vendor,
+                expenseType: e.expenseType,
+                date: e.date,
+                subTotal: s.amount,
+                taxRate: s.taxRate,
+                tax: s.amount |> Percent.calculate(s.taxRate),
+                total: (s.amount |> Percent.calculate(s.taxRate)) + s.amount,
+                createdBy: e.createdBy,
+              }
+            )
+       )
+  )
+  ->List.concat;
 
 let sum = (whatToSum: denormalized => int, l: list(denormalized)) =>
-  l |. Belt.List.reduce(0, (a, c) => a + whatToSum(c));
+  l->(Belt.List.reduce(0, (a, c) => a + whatToSum(c)));
 
 module New = {
   type t = {
@@ -66,6 +71,7 @@ module New = {
     tax: Money.t,
     total: Money.t,
     movements: list(Movement.t),
+    createdBy: string,
   };
   let mapToJs = (expense: t) => {
     "description": expense.description,
@@ -77,6 +83,7 @@ module New = {
     "tax": expense.tax,
     "total": expense.total,
     "movements": expense.movements |> List.map(m => m |> Movement.toJs),
+    "createdBy": expense.createdBy,
   };
 };
 
@@ -91,9 +98,10 @@ type jsT = {
   "tax": int,
   "total": int,
   "movements": list(Movement.t),
+  "createdBy": string,
 };
 
-let fromJs = expenseJs : t => {
+let fromJs = expenseJs: t => {
   id: expenseJs##_id,
   description: expenseJs##description,
   document: expenseJs##document,
@@ -112,6 +120,7 @@ let fromJs = expenseJs : t => {
     | Some(movements) => movements |> List.map(m => m |> Movement.fromJs)
     | None => []
     },
+  createdBy: expenseJs##createdBy,
 };
 
 let toJs = (expense: t) => {
@@ -125,6 +134,7 @@ let toJs = (expense: t) => {
   "tax": expense.tax,
   "total": expense.total,
   "movements": expense.movements |> List.map(m => m |> Movement.toJs),
+  "createdBy": expense.createdBy,
 };
 
 let toJsWithRev = (rev: string, expense: t) => {
@@ -139,4 +149,5 @@ let toJsWithRev = (rev: string, expense: t) => {
   "tax": expense.tax,
   "total": expense.total,
   "movements": expense.movements |> List.map(m => m |> Movement.toJs),
+  "createdBy": expense.createdBy,
 };
