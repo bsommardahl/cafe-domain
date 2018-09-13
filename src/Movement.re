@@ -1,14 +1,8 @@
 type t = {
-  product: Product.t,
+  productId: string,
   quantity: int,
 };
 
-let fromJs = js : t => {
-  product: js##product |> Product.mapFromJs,
-  quantity: js##quantity,
-};
+let fromJs = js: t => {productId: js##product, quantity: js##quantity};
 
-let toJs = (t: t) => {
-  "product": t.product |> Product.mapToJs,
-  "quantity": t.quantity,
-};
+let toJs = (t: t) => {"productId": t.productId, "quantity": t.quantity};
