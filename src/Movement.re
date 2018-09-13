@@ -1,17 +1,23 @@
 type t = {
   productId: string,
-  productChildrenIds: list(string),
+  productChildren: list(Product.child),
   quantity: int,
 };
 
 let fromJs = js: t => {
   productId: js##product,
-  productChildrenIds: js##productChildrenIds |> Array.to_list,
+  productChildren:
+    switch (Js.Nullable.toOption(js##productChildren)) {
+    | Some(products) =>
+      products |> Array.to_list |> List.map(x => x |> Product.childFromJs)
+    | None => []
+    },
   quantity: js##quantity,
 };
 
 let toJs = (t: t) => {
   "productId": t.productId,
-  "productChildrenIds": t.productChildrenIds |> Array.of_list,
+  "productChildrenIds":
+    t.productChildren |> List.map(x => x |> Product.childToJs) |> Array.of_list,
   "quantity": t.quantity,
 };
