@@ -5,7 +5,7 @@ type t = {
 };
 
 let fromJs = js: t => {
-  productId: js##product,
+  productId: js##productId,
   productChildren:
     switch (Js.Nullable.toOption(js##productChildren)) {
     | Some(products) =>
