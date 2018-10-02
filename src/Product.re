@@ -18,6 +18,7 @@ type t = {
   unit: string,
   taxCalculation: Tax.taxCalculationMethod,
   products: list(child),
+  archived: bool,
 };
 
 let fromOptionalDate = d =>
@@ -42,6 +43,7 @@ module NewProduct = {
     unit: string,
     taxCalculation: Tax.taxCalculationMethod,
     products: list(child),
+    archived: bool,
   };
   let mapToJs = (prod: t) => {
     "sku": prod.sku,
@@ -55,6 +57,7 @@ module NewProduct = {
     "endDate": fromOptionalDate(prod.endDate),
     "tags": prod.tags |> Array.of_list,
     "taxCalculation": prod.taxCalculation |> Tax.Calculation.toDelimitedString,
+    "archived": prod.archived,
     "products":
       prod.products |> List.map(x => x |> childToJs) |> Array.of_list,
   };
@@ -78,6 +81,7 @@ let mapFromJs = prodJs: t => {
   unit: prodJs##unit,
   startDate: toOptionalDate(prodJs##startDate),
   endDate: toOptionalDate(prodJs##endDate),
+  archived: prodJs##archived,
   taxCalculation: prodJs##taxCalculation |> Tax.Calculation.toMethod,
 };
 

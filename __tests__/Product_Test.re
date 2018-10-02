@@ -23,6 +23,7 @@ let buildProduct =
   products: [],
   suggestedPrice: 1000,
   taxCalculation: Exempt,
+  archived: false,
 };
 
 describe("product related utilities", () =>
@@ -44,6 +45,7 @@ describe("product related utilities", () =>
         "tags": ["fsdafsda"],
         "products": Js.Nullable.undefined,
         "taxCalculation": "exempt|",
+        "archived": false,
       };
       let product: Product.t = js |> Product.mapFromJs;
       expect(product.id) |> toEqual(js##_id);
