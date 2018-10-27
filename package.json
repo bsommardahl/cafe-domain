@@ -8,7 +8,8 @@
     "clean": "bsb -clean-world",
     "pretest": "npm run build",
     "test": "jest",
-    "watch:jest": "jest --watchAll"
+    "watch:jest": "jest --watchAll",
+    "deploy": "npm publish"
   },
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.3",
